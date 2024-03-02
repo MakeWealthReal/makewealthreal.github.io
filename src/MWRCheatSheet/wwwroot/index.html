@@ -103,6 +103,8 @@
                     text: message,
                 };
 
+                clipboardCopy.copyText(message);
+
                 if (navigator.canShare(data)) {
 
                     console.log("webshareMethod - 3");
