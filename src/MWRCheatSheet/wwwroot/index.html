@@ -30,6 +30,13 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+    <div id="foobar">
+        <img src="images/mwr-banner.png"/>
+        <br/>
+        <p>Hello World!</p>
+    </div>
+
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
@@ -53,6 +60,8 @@
 
     <script>
         async function clipboardMethod() {
+            // this works perfectly on Signal Desktop
+
             var image = await fetch('images/mwr-banner.png');
             console.log("clipboardMethod - 1");
 
@@ -65,44 +74,60 @@
                 new ClipboardItem({
                     [blob.type]: blob,
                     'text/plain': new Blob(["my text value"], { type: 'text/plain' })
+                },
+                {
+                    presentationStyle : "inline"
                 }),
             ]);
             console.log("clipboardMethod - 3");
 
         }
-        async function testMethod() {
-            var image = await fetch('images/mwr-banner.png');
+
+        async function webshare(title, message, imageUrl) {
+            if (navigator.canShare) {
+               var image = await fetch(imageUrl);
             
-            console.log("testMethod - 1");
+                console.log("webshareMethod - 1");
 
-            var blob = await image.blob();
+                var blob = await image.blob();
 
-            console.log("testMethod - 2");
+                console.log("webshareMethod - 2");
 
-            var textBlob = new Blob(["my text value"], { type: 'text/plain' });
+                const data = {
+                    files: [
+                        new File([blob], 'image.png', {
+                            type: blob.type,
+                        }),
+                    ],
+                    title: title,
+                    text: message,
+                };
 
-            // Assume `blob` is a PNG image file.
-            const data = {
-                files: [
-                    new File([blob], 'image.png', {
-                        type: blob.type,
-                    }),
-                    new File([textBlob], 'foo.txt', {
-                        type: textBlob.type,
-                    }),
-                ],
-                title: 'My title',
-                text: 'My text',
-            };
+                if (navigator.canShare(data)) {
 
-            console.log("testMethod - 3");
+                    console.log("webshareMethod - 3");
 
-            if (navigator.canShare(data)) {
-                await navigator.share(data);
+                    await navigator.share(data);
+                }
             }
+        }
 
-            console.log("testMethod - 4");
+        async function clipboardHTMLMethod() {
+            const myContent = document.getElementById("foobar");
+            const type = "text/html";
+            const myBlob = new Blob([myContent.innerHTML], { type });
+            console.log("clipboardHTMLMethod 1 - innerHTML: " + myContent.innerHTML);
 
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    [myBlob.type]: myBlob,
+                    //'text/plain': new Blob(["my text value"], { type: 'text/plain' })
+                },
+                    {
+                        presentationStyle: "inline"
+                    }),
+            ]);
+            console.log("clipboardHTMLMethod - 2");
         }
 
         window.clipboardCopy = {
