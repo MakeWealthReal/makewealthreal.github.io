@@ -2,8 +2,12 @@
 @inherits Components.ComponentBase
 @using Components
 @using MWRCheatSheet.Components
+@using Append.Blazor.WebShare
+@inject IWebShareService WebShareService
 
 <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Essentials</MudText>
+<MudText>WebSharing is available: @_webSharingAvailable</MudText>
+<MudButton OnClick="@(async e => await WebShareService.ShareAsync("Title", "Text", "https://www.google.com"))">Share Me!</MudButton>
 <MudStack>
     <MudSpacer />
     <CopyTextMultilingual Description="72-Hour Money Challenge (1min 30sec)"
@@ -199,10 +203,12 @@
 @code {
     private string? _username;
     private bool _pageLoaded;
+    private bool _webSharingAvailable;
 
     protected override async Task OnInitializedAsync()
     {
         _username = await this.GetUsernameAsync();
+        _webSharingAvailable = await WebShareService.IsSupportedAsync();
 
         _pageLoaded = true;
         this.StateHasChanged();
