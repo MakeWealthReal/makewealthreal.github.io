@@ -52,6 +52,24 @@
     </script>
 
     <script>
+        async function clipboardMethod() {
+            var image = await fetch('images/mwr-banner.png');
+            console.log("clipboardMethod - 1");
+
+            var blob = await image.blob();
+            console.log("clipboardMethod - 2");
+
+            console.log("clipboardMethod - blob type: " + blob.type);
+
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    [blob.type]: blob,
+                    'text/plain': new Blob(["my text value"], { type: 'text/plain' })
+                }),
+            ]);
+            console.log("clipboardMethod - 3");
+
+        }
         async function testMethod() {
             var image = await fetch('images/mwr-banner.png');
             

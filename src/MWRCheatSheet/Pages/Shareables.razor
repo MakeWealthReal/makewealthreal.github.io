@@ -10,6 +10,7 @@
 <MudText>WebSharing is available: @_webSharingAvailable</MudText>
 <MudButton OnClick="@(async e => await WebShareService.ShareAsync("Title", "Text", "https://www.google.com"))">Share Me!</MudButton>
 <MudButton OnClick="@(async e => await JSRuntime.InvokeVoidAsync("testMethod"))">Share Image</MudButton>
+<MudButton OnClick="@(async e => await JSRuntime.InvokeVoidAsync("clipboardMethod"))">Clipboard Image</MudButton>
 <MudStack>
     <MudSpacer />
     <CopyTextMultilingual Description="72-Hour Money Challenge (1min 30sec)"
