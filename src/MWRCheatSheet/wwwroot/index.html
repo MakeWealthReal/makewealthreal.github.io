@@ -31,12 +31,6 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <div id="foobar">
-        <img src="images/mwr-banner.png"/>
-        <br/>
-        <p>Hello World!</p>
-    </div>
-
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
@@ -84,18 +78,22 @@
         }
 
         async function webshare(title, message, imageUrl) {
+
+            var fileExtension = imageUrl.split('.').pop();
+            console.log("webshare - file extension: " + fileExtension);
+
             if (navigator.canShare) {
                var image = await fetch(imageUrl);
             
-                console.log("webshareMethod - 1");
+                console.log("webshare - 1");
 
                 var blob = await image.blob();
 
-                console.log("webshareMethod - 2");
+                console.log("webshare - 2");
 
                 const data = {
                     files: [
-                        new File([blob], 'image.png', {
+                        new File([blob], 'MWR.' + fileExtension, {
                             type: blob.type,
                         }),
                     ],
@@ -107,7 +105,7 @@
 
                 if (navigator.canShare(data)) {
 
-                    console.log("webshareMethod - 3");
+                    console.log("webshare - 3");
 
                     await navigator.share(data);
                 }

@@ -27,12 +27,30 @@
         await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", text);
     }
 
+    protected async Task ShareMessageAsync(string message, string imageUrl)
+    {
+        const string DefaultWebShareTitle = "MWR";
+
+        await JSRuntime.InvokeVoidAsync("webshare", DefaultWebShareTitle, message, imageUrl);
+    }
+
+    protected Task ShareMessageAsync(string message, Image image) => ShareMessageAsync(message, ImageUrl(image));
+
     protected static string BusinessEnrollmentUrl(string username) => $"https://user.mwrfinancial.com/{username}/join";
     protected static string MembershipEnrollmentUrl(string username) => $"https://user.mwrfinancial.com/{username}/signup-financialedge";
     protected static string InstantPayRaiseUrlEnglish(string username) => $"https://www.mwrfinancial.com/iprr/?member={username}";
     protected static string InstantPayRaiseUrlSpanish(string username) => $"https://www.mwrfinancial.com/es/iprr/?member={username}";
     protected static string MarketingDirectorUrlEnglish(string username) => $"https://www.mwrfinancial.com/?member={username}";
     protected static string MarketingDirectorUrlSpanish(string username) => $"https://www.mwrfinancial.com/es/?member={username}";
+
+    protected static string ImageUrl(Image image) => image switch
+    {
+        Image.MWRBanner => "/images/mwr-banner.png",
+        Image.HealthShare => "/images/mwr-healthshare.png",
+        Image.MembershipLogo => "/images/mwr-membership-logo.jpg",
+        Image.MoneyChallengeLogo => "/images/72hour-money-challenge-logo.png",
+        _ => throw new Exception($"Image not found: {image}"),
+    };
 
     protected async Task<Repository.Settings> GetSettingsAsync()
     {
@@ -90,5 +108,14 @@
         catch(Exception) { }
 
         return response;
+    }
+
+    public enum Image
+    {
+        None = 0,
+        MoneyChallengeLogo = 1,
+        MWRBanner = 2,
+        HealthShare = 3,
+        MembershipLogo = 4,
     }
 }

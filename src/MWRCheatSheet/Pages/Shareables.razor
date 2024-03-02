@@ -6,7 +6,6 @@
 @inject IWebShareService WebShareService
 
 <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Essentials</MudText>
-<MudText>WebSharing is available: @_webSharingAvailable</MudText>
 <MudStack>
     <MudSpacer />
     <CopyTextMultilingual Description="72-Hour Money Challenge (1min 30sec)"
@@ -44,6 +43,7 @@
     @if (_pageLoaded)
     {
         <CopyTextMultilingual Description="Instant Pay Raise"
+
                               EnglishTextToCopy="@InstantPayRaiseUrlEnglish(_username!)"
                               EnglishTooltip="English link copied!"
 
