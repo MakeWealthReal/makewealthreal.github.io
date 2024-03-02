@@ -52,6 +52,36 @@
     </script>
 
     <script>
+        async function testMethod() {
+            var image = await fetch('images/mwr-banner.png');
+            
+            console.log("testMethod - 1");
+
+            var blob = await image.blob();
+
+            console.log("testMethod - 2");
+
+            // Assume `blob` is a PNG image file.
+            const data = {
+                files: [
+                    new File([blob], 'image.png', {
+                        type: blob.type,
+                    }),
+                ],
+                title: 'My title',
+                text: 'My text',
+            };
+
+            console.log("testMethod - 3");
+
+            if (navigator.canShare(data)) {
+                await navigator.share(data);
+            }
+
+            console.log("testMethod - 4");
+
+        }
+
         window.clipboardCopy = {
             copyText: function (text) {
                 navigator.clipboard.writeText(text).then(function () {
