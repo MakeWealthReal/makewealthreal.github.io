@@ -79,11 +79,16 @@
 
             console.log("testMethod - 2");
 
+            var textBlob = new Blob(["my text value"], { type: 'text/plain' });
+
             // Assume `blob` is a PNG image file.
             const data = {
                 files: [
                     new File([blob], 'image.png', {
                         type: blob.type,
+                    }),
+                    new File([textBlob], 'foo.txt', {
+                        type: textBlob.type,
                     }),
                 ],
                 title: 'My title',
