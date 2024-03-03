@@ -101,7 +101,7 @@
                     text: message,
                 };
 
-                clipboardCopy.copyText(message);
+                await clipboardCopy.copyText(message);
 
                 if (navigator.canShare(data)) {
 
@@ -131,13 +131,8 @@
         }
 
         window.clipboardCopy = {
-            copyText: function (text) {
-                navigator.clipboard.writeText(text).then(function () {
-                    //alert("Copied to clipboard!");
-                })
-                    .catch(function (error) {
-                        //alert(error);
-                    });
+            copyText: async function (text) {
+                await navigator.clipboard.writeText(text);
             }
         };
 

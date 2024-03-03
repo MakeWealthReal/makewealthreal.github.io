@@ -6,11 +6,6 @@
 @inject IJSRuntime JSRuntime
 @inject IWebShareService WebShareService
 
-<MudButton Color="Color.Primary" OnClick="@(async e => await WebShareService.ShareAsync("Title", "Text", "https://www.google.com"))">WebShareService</MudButton>
-<MudButton Color="Color.Primary" OnClick="@(async e => await WebShareAsync("My Test Title", "My Test Message", "/images/mwr-healthshare.png"))">webshareMethod</MudButton>
-<MudButton Color="Color.Primary" OnClick="@(async e => await JSRuntime.InvokeVoidAsync("clipboardMethod"))">clipboardMethod</MudButton>
-<MudButton Color="Color.Primary" OnClick="@(async e => await JSRuntime.InvokeVoidAsync("clipboardHTMLMethod"))">clipboardHTMLMethod</MudButton>
-
 <MudStack>
     <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Phrases that Pay!</MudText>
     <MudText Align="Align.Center">Tap Image to Download</MudText>
