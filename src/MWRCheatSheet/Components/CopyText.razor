@@ -3,7 +3,16 @@
 <MudStack Row="true">
     <MudSpacer />
     <MudText Align="Align.Center">
-        @this.Description
+        @if (this.Description != null)
+        {
+            @this.Description
+        }
+        else
+        {
+            <div>
+                @this.ChildContent
+            </div>
+        }
         <br />
         <MudStack Row="true">
             <MudSpacer/>
@@ -26,7 +35,7 @@
     private bool _showShareTooltip;
 
     [Parameter]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [Parameter]
     public string TextToCopy { get; set; }

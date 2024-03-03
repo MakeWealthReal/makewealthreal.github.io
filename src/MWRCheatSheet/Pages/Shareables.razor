@@ -130,7 +130,7 @@
 </MudStack>
 <br />
 <br/>
-<MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Marketing Directors</MudText>
+<MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Qualified Marketing Directors</MudText>
 <br/>
 <MudStack>
     @if (_pageLoaded)
@@ -238,8 +238,6 @@
     }
 
     private static int MinuteEstimate(TimeSpan duration) => duration.Minutes + (duration.Seconds >= 30 ? 1 : 0);
-
-    private const string PointingDownEmoji = $"\ud83d\udc47";
 
     private static string VideoShareable(string heading, string videoUrl, TimeSpan videoLength)
         => $"{heading}{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}({MinuteEstimate(videoLength)}min){Environment.NewLine}{videoUrl}";
