@@ -8,7 +8,7 @@
 <MudCard>
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.body1">Faith and Finance</MudText>
+            <MudText Typo="Typo.body1">@Header</MudText>
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardMedia Image="@ImageUri"/>
@@ -30,6 +30,9 @@
     private readonly TimeZoneInfo[] BusinessStandardTimeZonesOrdered = [DefaultTimeZone, ChicagoTimeZone, LosAngelesTimeZone];
 
     private int _height = 300;
+
+    [Parameter]
+    public string Header { get; set; } = "72-Hour Money Challenge!";
 
     [Parameter]
     public string ImageUri { get; set; }
