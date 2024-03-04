@@ -6,6 +6,11 @@
 @code {
     public static readonly string DefaultUsername = "MS1";
 
+    protected static readonly TimeZoneInfo NewYorkTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
+    protected static readonly TimeZoneInfo ChicagoTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Chicago");
+    protected static readonly TimeZoneInfo LosAngelesTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Los_Angeles");
+    protected static readonly TimeZoneInfo DefaultTimeZone = NewYorkTimeZone;
+
     protected const string PointingDownEmoji = $"\ud83d\udc47";
 
     private const string SettingsKey = "settings";
@@ -22,6 +27,22 @@
     {
         this.ComponentInitialized = true;
         this.StateHasChanged();
+    }
+
+    protected static DateTimeOffset GetNextEvent(DayOfWeek day, TimeOnly time, TimeZoneInfo timeZone)
+    {
+        var currentTimeInEventTimeZone = DateTimeOffset.Now.ToOffset(timeZone.GetUtcOffset(DateTimeOffset.Now));
+
+        var nextEventTime = currentTimeInEventTimeZone.AddHours(time.Hour - currentTimeInEventTimeZone.Hour);
+        nextEventTime = nextEventTime.AddMinutes(time.Minute - nextEventTime.Minute);
+
+        var nextEvent = nextEventTime;
+        while (nextEvent.DayOfWeek != day)
+        {
+            nextEvent = nextEvent.AddDays(1);
+        }
+
+        return nextEvent;
     }
 
     protected async Task CopyTextToClipboardAsync(string text)

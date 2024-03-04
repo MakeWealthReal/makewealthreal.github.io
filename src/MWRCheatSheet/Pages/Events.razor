@@ -2,44 +2,29 @@
 @inherits Components.ComponentBase
 @using Components
 @using MWRCheatSheet.Components
-@using Append.Blazor.WebShare
-@inject IJSRuntime JSRuntime
-@inject IWebShareService WebShareService
 
 <MudStack>
     <MudText Align="Align.Center">Tap Images to Download</MudText>
     <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Mondays</MudText>
-    <DownloadableImage Alt="Mondays | Kingdom Builders | Overview" ImageUri="images/events/mondays-kingdombuilders-overview.jpeg" />
-    <CopyText Tooltip="Link copied!"
-              TextToCopy="@($"Join us for our MWR Business Overview!!!{Environment.NewLine}{Environment.NewLine}Hosted By: Dr. Gerald W. Parker{Environment.NewLine}{Environment.NewLine}{MondayOverviewKindgomBuilders:dddd, MMMM d, yyyy}{Environment.NewLine}{Environment.NewLine}{GetRegionalTimes(MondayOverviewKindgomBuilders)}{Environment.NewLine}{Environment.NewLine}Go to:{Environment.NewLine}http://zoom.mwrkingdombuilders.com{Environment.NewLine}{Environment.NewLine}Password:{Environment.NewLine}mwrkb{Environment.NewLine}{Environment.NewLine}#72HrMoneyChallenge")"
-              ImageUrl="images/events/mondays-kingdombuilders-overview.jpeg">
+    <RecurringEvent ImageUri="images/events/mondays-kingdombuilders-overview.jpeg"
+                    Recurrence="@((DayOfWeek.Monday, new TimeOnly(20, 30), NewYorkTimeZone))"
+                    Text="@($"Join us for our MWR Business Overview!!!{Environment.NewLine}{Environment.NewLine}Hosted By: Dr. Gerald W. Parker{Environment.NewLine}{Environment.NewLine}{GetNextEvent(DayOfWeek.Monday, new(20, 30), NewYorkTimeZone):dddd, MMMM d, yyyy}{Environment.NewLine}{Environment.NewLine}{GetRegionalTimes(GetNextEvent(DayOfWeek.Monday, new(20, 30), NewYorkTimeZone))}{Environment.NewLine}{Environment.NewLine}Go to:{Environment.NewLine}http://zoom.mwrkingdombuilders.com{Environment.NewLine}{Environment.NewLine}Password:{Environment.NewLine}mwrkb{Environment.NewLine}{Environment.NewLine}#72HrMoneyChallenge")" />
 
-        <MudText>
-            @MondayOverviewKindgomBuilders.ToString("dddd\\s") @@ @MondayOverviewKindgomBuilders.ToLocalTime().ToString(" h:mm tt") @TimeZoneInfo.Local.StandardName
-        </MudText>
-    </CopyText>
+    <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Tuesdays</MudText>
+    <RecurringEvent ImageUri="images/events/tuesdays-kingdombuilders-faithandfinance.jpeg"
+                    Recurrence="@((DayOfWeek.Tuesday, new TimeOnly(12, 0), NewYorkTimeZone))"
+                    Text="@($"Join us for our Faith and Finance Conversation!{Environment.NewLine}{Environment.NewLine}Hosted By: Dr. Gerald W. Parker{Environment.NewLine}{Environment.NewLine}{GetNextEvent(DayOfWeek.Tuesday, new(12, 0), NewYorkTimeZone):dddd, MMMM d, yyyy}{Environment.NewLine}{Environment.NewLine}{GetRegionalTimes(GetNextEvent(DayOfWeek.Tuesday, new(12, 0), NewYorkTimeZone))}{Environment.NewLine}{Environment.NewLine}Go to:{Environment.NewLine}http://zoom.mwrkingdombuilders.com{Environment.NewLine}{Environment.NewLine}Password:{Environment.NewLine}mwrkb{Environment.NewLine}{Environment.NewLine}Dr. Gerald W. Parker will share how to create wealth and a legacy using Kingdom principles!!!{Environment.NewLine}{Environment.NewLine}#KingdomBuilders #MWR #72HrMoneyChallenge")" />
 
 </MudStack>
-
 @code {
-    private static readonly TimeZoneInfo DefaultTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
-    private static readonly TimeZoneInfo ChicagoTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Chicago");
-    private static readonly TimeZoneInfo LosAngelesTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Los_Angeles");
-
     private readonly TimeZoneInfo[] BusinessStandardTimeZonesOrdered = [DefaultTimeZone, ChicagoTimeZone, LosAngelesTimeZone];
 
     private string GetRegionalTimes(DateTimeOffset dateTime)
     {
         var regionalTimes = BusinessStandardTimeZonesOrdered
-            .Select(timeZone => $"{dateTime.ToOffset(timeZone.BaseUtcOffset):h:m tt} {timeZone.StandardName}")
-            .Aggregate((formatted, next) => $"{formatted} / {next}");
+            .Select(timeZone => $"{dateTime.ToOffset(timeZone.BaseUtcOffset).ToString("h:mmt").ToLower()}{timeZone.StandardName.First()}{timeZone.StandardName.Substring(1).ToLower()}")
+            .Aggregate((formatted, next) => $"{formatted}/ {next}");
 
         return regionalTimes;
     }
-
-    private readonly DateTimeOffset MondayOverviewKindgomBuilders = new(
-        new DateOnly(2024, 3, 4),
-        new TimeOnly(20, 30),
-        DefaultTimeZone.GetUtcOffset(DateTimeOffset.Now));
-
 }

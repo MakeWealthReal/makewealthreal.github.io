@@ -1,41 +1,34 @@
 ﻿@inherits ComponentBase
 @inject IJSRuntime JSRuntime
 
-<MudStack Row="true">
-    <MudSpacer />
-    <MudText Align="Align.Center">
-        @this.Description
-        <br />
-        <MudStack Row="true">
-            <MudSpacer/>
-            <MudStack>
-                <MudText>(English)</MudText>
-                <MudPaper Class="align-start d-flex" Outlined="false" Elevation="0">
-                    <MudTooltip Text="@EnglishTooltip" IsVisible="_showEnglishCopyTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
-                        <MudIconButton OnClick="OnEnglishCopyClick" Icon="@Icons.Material.Filled.ContentCopy" Color="Color.Primary" Disabled="false"/>
-                    </MudTooltip>
-                    <MudTooltip Text="@EnglishTooltip" IsVisible="_showEnglishShareTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
-                        <MudIconButton OnClick="OnEnglishShareClick" Icon="@Icons.Material.Filled.Share" Color="Color.Primary" Disabled="false"/>
-                    </MudTooltip>
-                </MudPaper>
-            </MudStack>
-
-            <MudStack>
-                <MudText>(Español)</MudText>
-                <MudPaper Class="align-start d-flex" Outlined="false" Elevation="0">
-                    <MudTooltip Text="@SpanishTooltip" IsVisible="_showSpanishCopyTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
-                        <MudIconButton OnClick="OnSpanishCopyClick" Icon="@Icons.Material.Filled.ContentCopy" Color="Color.Primary" Disabled="false"/>
-                    </MudTooltip>
-                    <MudTooltip Text="@SpanishTooltip" IsVisible="_showSpanishShareTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
-                        <MudIconButton OnClick="OnSpanishShareClick" Icon="@Icons.Material.Filled.Share" Color="Color.Primary" Disabled="false"/>
-                    </MudTooltip>
-                    <MudSpacer/>
-                </MudPaper>
-            </MudStack>
-            <MudSpacer/>
-        </MudStack>
-    </MudText>
-    <MudSpacer />
+<MudStack>
+    <MudText Class="border-solid border-2 mud-border-primary pa-4" Align="Align.Center">@this.Description</MudText>
+    <MudStack Row="true">
+        <MudSpacer/>
+        <MudTooltip Text="@EnglishTooltip" IsVisible="_showEnglishCopyTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+            <MudIconButton OnClick="OnEnglishCopyClick" Icon="@Icons.Material.Filled.ContentCopy" Color="Color.Primary" Disabled="false"/>
+        </MudTooltip>
+        <MudPaper Class="d-flex align-center" Elevation="0">
+            <MudText Style="">(English)</MudText>
+        </MudPaper>
+        <MudTooltip Text="@EnglishTooltip" IsVisible="_showEnglishShareTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+            <MudIconButton OnClick="OnEnglishShareClick" Icon="@Icons.Material.Filled.Share" Color="Color.Primary" Disabled="false"/>
+        </MudTooltip>
+        <MudSpacer/>
+    </MudStack>
+    <MudStack Row="true">
+        <MudSpacer/>
+        <MudTooltip Text="@SpanishTooltip" IsVisible="_showSpanishCopyTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+            <MudIconButton OnClick="OnSpanishCopyClick" Icon="@Icons.Material.Filled.ContentCopy" Color="Color.Primary" Disabled="false"/>
+        </MudTooltip>
+        <MudPaper Class="d-flex align-center" Elevation="0">
+            <MudText>(Español)</MudText>
+        </MudPaper>
+        <MudTooltip Text="@SpanishTooltip" IsVisible="_showSpanishShareTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+            <MudIconButton OnClick="OnSpanishShareClick" Icon="@Icons.Material.Filled.Share" Color="Color.Primary" Disabled="false"/>
+        </MudTooltip>
+        <MudSpacer/>
+    </MudStack>
 </MudStack>
 
 @code {

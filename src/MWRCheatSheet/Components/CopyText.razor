@@ -1,32 +1,28 @@
 ﻿@inherits Components.ComponentBase
 
-<MudStack Row="true">
-    <MudSpacer />
-    <MudText Align="Align.Center">
-        @if (this.Description != null)
-        {
-            @this.Description
-        }
-        else
-        {
-            <div>
-                @this.ChildContent
-            </div>
-        }
-        <br />
-        <MudStack Row="true">
-            <MudSpacer/>
-            <MudPaper Class="align-start d-flex" Outlined="false" Elevation="0">
-                <MudTooltip Text="@Tooltip" IsVisible="_showCopyTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
-                    <MudIconButton OnClick="OnCopyClick" Icon="@Icons.Material.Filled.ContentCopy" Color="Color.Primary"/>
-                </MudTooltip>
-                <MudTooltip Text="@Tooltip" IsVisible="_showShareTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
-                    <MudIconButton OnClick="OnShareClick" Icon="@Icons.Material.Filled.Share" Color="Color.Primary"/>
-                </MudTooltip>
-            </MudPaper>
-            <MudSpacer/>
-        </MudStack>
-    </MudText>
+<MudStack>
+    @if (this.Description != null)
+    {
+        <MudText Align="Align.Center" Class="border-solid border-2 mud-border-primary pa-4">@this.Description</MudText>
+    }
+    else
+    {
+        <div>
+            @this.ChildContent
+        </div>
+    }
+    <MudStack Row="true">
+        <MudSpacer/>
+        <MudPaper Class="align-start d-flex" Outlined="false" Elevation="0">
+            <MudTooltip Text="@Tooltip" IsVisible="_showCopyTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+                <MudIconButton OnClick="OnCopyClick" Icon="@Icons.Material.Filled.ContentCopy" Color="Color.Primary"/>
+            </MudTooltip>
+            <MudTooltip Text="@Tooltip" IsVisible="_showShareTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+                <MudIconButton OnClick="OnShareClick" Icon="@Icons.Material.Filled.Share" Color="Color.Primary"/>
+            </MudTooltip>
+        </MudPaper>
+        <MudSpacer/>
+    </MudStack>
     <MudSpacer />
 </MudStack>
 
