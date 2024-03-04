@@ -16,7 +16,7 @@
         <MudText Typo="Typo.body2" Align="Align.Center">@(Recurrence.Day)s @@ @GetNextEvent(this.Recurrence.Day, this.Recurrence.Time, this.Recurrence.TimeZone).ToLocalTime().ToString(" h:mm tt") @TimeZoneInfo.Local.StandardName</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudStack Row="true">
+        <MudStack Row="true" Style="width:100%;">
             <MudSpacer/>
             <CopyTextMinimal Tooltip="Link copied!"
                              TextToCopy="@Text"
