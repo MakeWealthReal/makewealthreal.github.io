@@ -14,7 +14,7 @@
     <MudCardMedia Image="@ImageUri"/>
     <MudCardContent>
         <MudStack>
-            <MudText Typo="Typo.body2" Align="Align.Center">@(Recurrence.Day)s @@ @GetNextEvent(this.Recurrence.Day, this.Recurrence.Time, this.Recurrence.TimeZone).ToLocalTime().ToString(" h:mm tt") @TimeZoneInfo.Local.StandardName</MudText>
+            <MudText Typo="Typo.body2" Align="Align.Center">@(Recurrence.Day)s @@ @GetNextEvent(this.Recurrence.Day, this.Recurrence.Time, this.Recurrence.TimeZone).ToOffset(TimeZoneInfo.Local.BaseUtcOffset).ToString(" h:mm tt") @TimeZoneInfo.Local.StandardName</MudText>
         </MudStack>
     </MudCardContent>
     <MudCardActions>
