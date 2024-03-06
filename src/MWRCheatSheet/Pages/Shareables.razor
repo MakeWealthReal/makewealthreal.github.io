@@ -19,11 +19,11 @@
                           SpanishTooltip="Español shareable copied!"
                           SpanishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)"/>
     <br/>
-    <CopyText Description="@($"72-Hour Money Challenge{Environment.NewLine}(EDM 7min){Environment.NewLine}{Environment.NewLine}(Challenge + FAQ)")"
-              Url="https://www.extradigitmovement.com/"
-              Tooltip="Shareable copied!"
-              TextToCopy="@($"72-Hour Money Challenge!{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}(2min){Environment.NewLine}https://www.ms1.megaschool.me/72hr-money-challenge{Environment.NewLine}{Environment.NewLine}FAQ{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}(5min){Environment.NewLine}https://www.ms1.megaschool.me/72hr-money-challenge-faq")"
-              ImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
+    <CopyText Description="@MoneyChallenge.Description"
+              Url="@MoneyChallenge.Url"
+              Tooltip="@MoneyChallenge.Tooltip"
+              TextToCopy="@MoneyChallenge.Content"
+              ImageUrl="@MoneyChallenge.ImageUrl" />
     <br />
     <CopyText Description="@($"72-Hour Money Challenge{Environment.NewLine}(EDM 8min){Environment.NewLine}{Environment.NewLine}(Revenue Sharing)")"
               Url="https://www.ms1.megaschool.me/72hr-moneychallenge-revenuesharing"
@@ -231,6 +231,13 @@
     private string? _username;
     private bool _pageLoaded;
     private bool _webSharingAvailable;
+
+    public static readonly Model.Shareable MoneyChallenge = new (
+        $"72-Hour Money Challenge{Environment.NewLine}(EDM 7min){Environment.NewLine}{Environment.NewLine}(Challenge + FAQ)",
+        "https://www.extradigitmovement.com/",
+        "Shareable copied!",
+        $"72-Hour Money Challenge!{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}(2min){Environment.NewLine}https://www.ms1.megaschool.me/72hr-money-challenge{Environment.NewLine}{Environment.NewLine}FAQ{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}(5min){Environment.NewLine}https://www.ms1.megaschool.me/72hr-money-challenge-faq",
+        GetImageUrl(Image.MoneyChallengeLogo));
 
     protected override async Task OnInitializedAsync()
     {
