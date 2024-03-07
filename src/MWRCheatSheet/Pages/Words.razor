@@ -12,7 +12,7 @@
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
         <MudText Typo="Typo.h4" GutterBottom="true" Align="Align.Center">Ask</MudText>
-        <MudButton OnClick="@(() => _askExpanded = !_askExpanded)">@(_askExpanded ? "Hide" : "Show me how!")</MudButton>
+        <MudButton OnClick="@(() => _askExpanded = !_askExpanded)" Color="Color.Primary">@(_askExpanded ? "Hide" : "Show me how!")</MudButton>
         <MudDivider/>
         <MudCollapse Expanded="_askExpanded">
             <MudStack Row="true">
@@ -36,7 +36,7 @@
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
         <MudText Typo="Typo.h4" GutterBottom="true" Align="Align.Center">Share</MudText>
-        <MudButton OnClick="@(() => _shareExpanded = !_shareExpanded)">@(_shareExpanded ? "Hide" : "Show me how!")</MudButton>
+        <MudButton OnClick="@(() => _shareExpanded = !_shareExpanded)" Color="Color.Primary">@(_shareExpanded ? "Hide" : "Show me how!")</MudButton>
         <MudDivider />
         <MudCollapse Expanded="_shareExpanded">
             <MudStack>
@@ -59,7 +59,7 @@
                 <MudStack Row="true">
                     <MudStack>
                         <MudText GutterBottom="true" Align="Align.Center">"Yes"</MudText>
-                        <MudButton OnClick="@(() => _readyForChallengedExpanded = !_readyForChallengedExpanded)">@(_readyForChallengedExpanded ? "Hide" : "My Response")</MudButton>
+                        <MudButton OnClick="@(() => _readyForChallengedExpanded = !_readyForChallengedExpanded)" Color="Color.Primary">@(_readyForChallengedExpanded ? "Hide" : "My Response")</MudButton>
                         <MudDivider />
                         <MudSpacer/>
                         <MudCollapse Expanded="_readyForChallengedExpanded">
@@ -69,7 +69,7 @@
                     </MudStack>
                     <MudStack>
                         <MudText GutterBottom="true" Align="Align.Center">"Questions"</MudText>
-                        <MudButton OnClick="@(() => _questionsExpanded = !_questionsExpanded)">@(_questionsExpanded ? "Hide" : "My Response")</MudButton>
+                        <MudButton OnClick="@(() => _questionsExpanded = !_questionsExpanded)" Color="Color.Primary">@(_questionsExpanded ? "Hide" : "My Response")</MudButton>
                         <MudDivider />
                         <MudSpacer/>
                         <MudCollapse Expanded="_questionsExpanded">
@@ -86,7 +86,7 @@
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
         <MudText Typo="Typo.h4" GutterBottom="true" Align="Align.Center">Connect</MudText>
-        <MudButton OnClick="@(() => _connectExpanded = !_connectExpanded)">@(_connectExpanded ? "Hide" : "Show me how!")</MudButton>
+        <MudButton OnClick="@(() => _connectExpanded = !_connectExpanded)" Color="Color.Primary">@(_connectExpanded ? "Hide" : "Show me how!")</MudButton>
         <MudDivider />
         <MudCollapse Expanded="_connectExpanded">
             <MudStack Row="true">
