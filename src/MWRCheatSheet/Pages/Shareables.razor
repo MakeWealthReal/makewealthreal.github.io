@@ -4,6 +4,8 @@
 @using MWRCheatSheet.Components
 @using Append.Blazor.WebShare
 @inject IWebShareService WebShareService
+@inject Repository.Repository Repo
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Essentials</MudText>
 <MudStack>
@@ -66,13 +68,13 @@
     @if (_pageLoaded)
     {
         <CopyTextMultilingual Description="Instant Pay Raise"
-                              Url="@InstantPayRaiseUrlEnglish(_username!)"
+                              Url="@Constants.InstantPayRaiseUrlEnglish(AppState!.UserName)"
 
-                              EnglishTextToCopy="@InstantPayRaiseUrlEnglish(_username!)"
+                              EnglishTextToCopy="@Constants.InstantPayRaiseUrlEnglish(AppState!.UserName)"
                               EnglishTooltip="English shareable copied!"
                               EnglishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)"
 
-                              SpanishTextToCopy="@InstantPayRaiseUrlSpanish(_username!)"
+                              SpanishTextToCopy="@Constants.InstantPayRaiseUrlSpanish(AppState!.UserName)"
                               SpanishTooltip="Español shareable copied!"
                               SpanishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
         <br/>
@@ -157,11 +159,11 @@
     {
         <CopyTextMultilingual Description="Join MWR"
 
-                              EnglishTextToCopy="@JoinMakeWealthRealEnglish(_username!)"
+                              EnglishTextToCopy="@Constants.JoinMakeWealthRealEnglish(AppState!.UserName)"
                               EnglishTooltip="English shareable copied!"
                               EnglishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)"
                               
-                              SpanishTextToCopy="@JoinMakeWealthRealSpanish(_username!)"
+                              SpanishTextToCopy="@Constants.JoinMakeWealthRealSpanish(AppState!.UserName)"
                               SpanishTooltip="Español shareable copied!"
                               SpanishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
         <br />
@@ -183,11 +185,11 @@
     {
         <CopyTextMultilingual Description="My Website"
 
-                              EnglishTextToCopy="@MarketingDirectorUrlEnglish(_username!)"
+                              EnglishTextToCopy="@Constants.MarketingDirectorUrlEnglish(AppState!.UserName)"
                               EnglishTooltip="English shareable copied!"
                               EnglishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)"
 
-                              SpanishTextToCopy="@MarketingDirectorUrlSpanish(_username!)"
+                              SpanishTextToCopy="@Constants.MarketingDirectorUrlSpanish(AppState!.UserName)"
                               SpanishTooltip="Español shareable copied!"
                               SpanishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
         <br/>
@@ -228,7 +230,6 @@
 </MudStack>
 
 @code {
-    private string? _username;
     private bool _pageLoaded;
     private bool _webSharingAvailable;
 
@@ -241,7 +242,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _username = await this.GetUsernameAsync();
         _webSharingAvailable = await WebShareService.IsSupportedAsync();
 
         _pageLoaded = true;

@@ -3,8 +3,8 @@
 @using Components
 @using MWRCheatSheet.Components
 @using Append.Blazor.WebShare
-@inject IJSRuntime JSRuntime
-@inject IWebShareService WebShareService
+@using MWRCheatSheet.Dialog
+@inject IDialogService Dialog
 
 <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">How to Share</MudText>
 <br/>
@@ -46,14 +46,7 @@
                 </MudStack>
                 <MudStack Row="true">
                     <MudText>#2: </MudText>
-                    <MudButton OnClick="@(() => _showMoneyChallengeShareable = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
-                    <MudOverlay Visible="_showMoneyChallengeShareable" DarkBackground="true" Absolute="false" OnClick="@(e => _showMoneyChallengeShareable = false)">
-                        <CopyText Description="@Shareables.MoneyChallenge.Description"
-                                  Url="@Shareables.MoneyChallenge.Url"
-                                  Tooltip="@Shareables.MoneyChallenge.Tooltip"
-                                  TextToCopy="@Shareables.MoneyChallenge.Content"
-                                  ImageUrl="@Shareables.MoneyChallenge.ImageUrl"/>
-                    </MudOverlay>
+                    <MudButton OnClick="@(() => Dialog.Show<ShareMoneyChallengeDialog>())" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
                 </MudStack>
                 <MudStack Row="true">
                     <MudText>#3: </MudText>
@@ -71,14 +64,7 @@
                         <MudSpacer/>
                         <MudCollapse Expanded="_readyForChallengedExpanded">
                             <MudText Align="Align.Center">"Great, here's how you take the challenge!" <br/><br/></MudText>
-                            <MudButton OnClick="@(() => _showMembershipSignUpShareable = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
-                            <MudOverlay Visible="_showMembershipSignUpShareable" DarkBackground="true" Absolute="false" OnClick="@(e => _showMembershipSignUpShareable = false)">
-                                <CopyText Description="Take the 72-Hour Money Challenge!"
-                                          Url="@MembershipEnrollmentUrl("MS1"!)"
-                                          Tooltip="Shareable copied!"
-                                          TextToCopy="@($"Take the 72-Hour Money Challenge!{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}{MembershipEnrollmentUrl("MS1"!)}")"
-                                          ImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)"/>
-                            </MudOverlay>
+                            <MudButton OnClick="@OnShowMembershipEnrollmentDialog" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
                         </MudCollapse>
                     </MudStack>
                     <MudStack>
@@ -124,6 +110,12 @@
     private bool _connectExpanded;
     private bool _readyForChallengedExpanded;
     private bool _questionsExpanded;
-    private bool _showMembershipSignUpShareable;
-    private bool _showMoneyChallengeShareable;
+
+    private void OnShowMembershipEnrollmentDialog()
+    {
+        var parameters = new DialogParameters<ShareMembershipEnrollmentDialog> { { x => x.AppState, this.AppState } };
+        var options = new DialogOptions() { NoHeader = true };
+
+        Dialog.Show<ShareMembershipEnrollmentDialog>("72-Hour Money Challenge", parameters, options);
+    }
 }

@@ -1,0 +1,43 @@
+﻿@using Blazored.LocalStorage
+@inject ILocalStorageService LocalStorage
+@inject Repository.Repository Repo
+
+<MudDialog>
+    <DialogContent>
+        <MudStack>
+            <MudTextField @bind-Value="AppState!.UserName" Label="My MWR Username" Placeholder="Your MWR username" HelperText=@($"Tip: If your website is '{Constants.MarketingDirectorUrlEnglish("ACME")}' then your username is 'ACME'") />
+            <br/>
+            <br/>
+            <MudTooltip Text="Saved!" IsVisible="_showTooltip" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+                <MudButton OnClick="OnUsernameSaveClick" EndIcon="@Icons.Material.Filled.Save" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+            </MudTooltip>
+        </MudStack>  
+    </DialogContent>
+</MudDialog>
+
+@code {
+    private bool _showTooltip;
+
+    [CascadingParameter] 
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public AppState? AppState { get; set; }
+
+    private async Task OnUsernameSaveClick()
+    {
+        var settings = await Repo.GetSettingsAsync(LocalStorage);
+
+        settings.Username = AppState!.UserName;
+
+        await Repo.SaveSettingsAsync(settings, LocalStorage);
+
+        _showTooltip = true;
+        this.StateHasChanged();
+
+        await Task.Delay(3 * 1000);
+
+        _showTooltip = false;
+        this.StateHasChanged();
+    }
+}
