@@ -38,7 +38,7 @@
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
         <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">More Info</MudText>
-        <MudButton OnClick="@(() => _moreInfoExpanded = !_moreInfoExpanded)">@(_moreInfoExpanded ? "Hide" : "Show")</MudButton>
+        <MudButton OnClick="@(() => _moreInfoExpanded = !_moreInfoExpanded)" Color="Color.Primary">@(_moreInfoExpanded ? "Hide" : "Show")</MudButton>
         <MudDivider />
         <MudCollapse Expanded="_moreInfoExpanded">
             <CopyText Description="@($"72-Hour Money Challenge{Environment.NewLine}Testimonials")"
@@ -65,7 +65,7 @@
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
         <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Services</MudText>
-        <MudButton OnClick="@(() => _servicesExpanded = !_servicesExpanded)">@(_servicesExpanded ? "Hide" : "Show")</MudButton>
+        <MudButton OnClick="@(() => _servicesExpanded = !_servicesExpanded)" Color="Color.Primary">@(_servicesExpanded ? "Hide" : "Show")</MudButton>
         <MudDivider />
         <MudCollapse Expanded="_servicesExpanded">
             <MudStack>
@@ -173,7 +173,7 @@
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
         <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Qualified Marketing Directors</MudText>
-        <MudButton OnClick="@(() => _qmdExpanded = !_qmdExpanded)">@(_qmdExpanded ? "Hide" : "Show")</MudButton>
+        <MudButton OnClick="@(() => _qmdExpanded = !_qmdExpanded)" Color="Color.Primary">@(_qmdExpanded ? "Hide" : "Show")</MudButton>
         <MudDivider />
         <MudCollapse Expanded="_qmdExpanded">
             <MudStack>
@@ -242,7 +242,7 @@
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
         <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Images</MudText>
-        <MudButton OnClick="@(() => _imagesExpanded = !_imagesExpanded)">@(_imagesExpanded ? "Hide" : "Show")</MudButton>
+        <MudButton OnClick="@(() => _imagesExpanded = !_imagesExpanded)" Color="Color.Primary">@(_imagesExpanded ? "Hide" : "Show")</MudButton>
         <MudDivider />
         <MudCollapse Expanded="_imagesExpanded">
             <MudStack>
