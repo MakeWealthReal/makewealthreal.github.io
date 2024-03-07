@@ -42,7 +42,7 @@
             <MudStack>
                 <MudStack Row="true">
                     <MudText>#1: </MudText>
-                    <MudText>"Let me show you this 7min video, rather than me trying to explain it, lol.  If you have any questions, I'm going to connect you with someone FAR more qualified than me for answers.  I can get you a soft introduction for a 5min conversation with the "Michael Jordan"/"Oprah Winfrey" of the organization."</MudText>
+                    <MudText>"Let me show you this 7min video, rather than me trying to explain it, lol. <br/><br/> If you have any questions, I'm going to connect you with someone FAR more qualified than me for answers."</MudText>
                 </MudStack>
                 <MudStack Row="true">
                     <MudText>#2: </MudText>
@@ -58,17 +58,21 @@
                 </MudStack>
                 <MudStack Row="true">
                     <MudStack>
-                        <MudText GutterBottom="true" Align="Align.Center">"Yes"</MudText>
+                        <MudText GutterBottom="true" Align="Align.Center">"Yes" <br/> @PointingDownEmoji</MudText>
                         <MudButton OnClick="@(() => _readyForChallengedExpanded = !_readyForChallengedExpanded)" Color="Color.Primary">@(_readyForChallengedExpanded ? "Hide" : "My Response")</MudButton>
                         <MudDivider />
                         <MudSpacer/>
                         <MudCollapse Expanded="_readyForChallengedExpanded">
                             <MudText Align="Align.Center">"Great, here's how you take the challenge!" <br/><br/></MudText>
-                            <MudButton OnClick="@OnShowMembershipEnrollmentDialog" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
+                            <MudStack Row="true">
+                                <MudSpacer/>
+                                <MudButton OnClick="@OnShowMembershipEnrollmentDialog" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
+                                <MudSpacer/>
+                            </MudStack>
                         </MudCollapse>
                     </MudStack>
                     <MudStack>
-                        <MudText GutterBottom="true" Align="Align.Center">"Questions"</MudText>
+                        <MudText GutterBottom="true" Align="Align.Center">"Questions" <br /> @PointingDownEmoji</MudText>
                         <MudButton OnClick="@(() => _questionsExpanded = !_questionsExpanded)" Color="Color.Primary">@(_questionsExpanded ? "Hide" : "My Response")</MudButton>
                         <MudDivider />
                         <MudSpacer/>
