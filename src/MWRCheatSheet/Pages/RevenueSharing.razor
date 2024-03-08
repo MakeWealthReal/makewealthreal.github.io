@@ -113,19 +113,17 @@
         else
         {
             var numMembershipToMeetMonthlyIncomeGoal = GetNumMembershipsToFundMonthlyBill(monthlyIncomeGoal);
-            Console.WriteLine($"GetTeamLevels - {numMembershipToMeetMonthlyIncomeGoal}");
             List<TeamLevel> teamLevels;
 
             var teamDistribution = TeamDistributions[distribution];
             var minimumRequiredLevel = teamDistribution.FirstOrDefault(teamLevel => teamLevel.TeamMembersTotal >= numMembershipToMeetMonthlyIncomeGoal);
             if (minimumRequiredLevel == null)
             {
-                teamLevels = [teamDistribution[0]];
+                teamLevels = [new("N/A", 0, null)];
             }
             else
             {
                 teamLevels = teamDistribution.Where(teamLevel => teamLevel.TeamMembersTotal <= minimumRequiredLevel.TeamMembersTotal).ToList();
-                Console.WriteLine($"minimumRequiredLevel - {minimumRequiredLevel.TeamMembersTotal}");
             }
 
             return teamLevels.OrderByDescending(x => x.PersonalEnrollments).ToList();
