@@ -3,8 +3,8 @@
 @using MWRCheatSheet.Components
 
 <Collapsable Title="Residual Income Goal" ExpandPrompt="Show me the MONEY!">
-    <MudText>Monthly Income Goal: </MudText>
-    <MudNumericField @bind-Value="_monthlyIncomeGoal" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" Immediate="true" HelperText="Monthly Income Goal" Variant="Variant.Outlined" Min="0" Max="40000" />
+    <MudText>Monthly Income Goal:</MudText>
+    <MudNumericField @bind-Value="_monthlyIncomeGoal" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" Immediate="true" HelperText="Monthly Income Goal" Variant="Variant.Outlined" Min="0" Max="@MaxMonthlyIncomeDemo" />
     <br />
     <br />
     <MudStack>
@@ -14,9 +14,15 @@
         <MudTextField Label="Guaranteed Monthly Income" Value="@($"${DailyGuarantee[GetRankForMonthlyIncome(_monthlyIncomeGoal)].MonthlyPay:N0}")" Variant="Variant.Outlined" ReadOnly="true" />
         <br/>
         <br/>
-        <MudText Align="Align.Center">Conservative Team Distribution</MudText>
-        <br/>
-        <MudTable Items="@GetTeamLevels(_monthlyIncomeGoal)" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
+        <br />
+        <MudText Align="Align.Center">Conservative Team Distribution <br /> (12-wide)</MudText>
+        <MudStack Row="true">
+            <MudSpacer />
+            <MudButton OnClick="@(() => ShowMax(TeamDistribution.TwelveWide))" Color="Color.Primary">Show Max</MudButton>
+            <MudSpacer />
+        </MudStack>
+        <br />
+        <MudTable Items="@GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.TwelveWide)" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
             <HeaderContent>
                 <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Level</MudTh>
                 <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Avg QMD Enrollment</MudTh>
@@ -30,10 +36,37 @@
                 <MudTd Style="text-align:center;" DataLabel="Customer Total">@context.CustomerTotal.ToString("N0")</MudTd>
             </RowTemplate>
         </MudTable>
+        <br />
+        <MudTextField Label="Total Members" Value="@GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.TwelveWide)).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true" />
+        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${GetMonthlyIncome(GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.TwelveWide))):N0}")" Variant="Variant.Outlined" ReadOnly="true" />
+        <br />
         <br/>
-        <MudTextField Label="Total Members" Value="@GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal)).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true" />
-        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${GetMonthlyIncome(GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal))):N0}")" Variant="Variant.Outlined" ReadOnly="true" />
-        <MudSpacer/>
+        <br />
+        <MudText Align="Align.Center">Conservative Team Distribution <br /> (6-wide)</MudText>
+        <MudStack Row="true">
+            <MudSpacer />
+            <MudButton OnClick="@(() => ShowMax(TeamDistribution.SixWide))" Color="Color.Primary">Show Max</MudButton>
+            <MudSpacer />
+        </MudStack>
+        <br />
+        <MudTable Items="@GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide)" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
+            <HeaderContent>
+                <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Level</MudTh>
+                <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Avg QMD Enrollment</MudTh>
+                <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">QMD Total</MudTh>
+                <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">Customer Total</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd Style="text-align:center;" DataLabel="Level">@context.Name</MudTd>
+                <MudTd Style="text-align:center;" DataLabel="Avg QMD Enrollment">@context.PersonalEnrollments.ToString("N0")</MudTd>
+                <MudTd Style="text-align:center;" DataLabel="QMD Total">@context.QualifiedMarketingDirectorTotal.ToString("N0")</MudTd>
+                <MudTd Style="text-align:center;" DataLabel="Customer Total">@context.CustomerTotal.ToString("N0")</MudTd>
+            </RowTemplate>
+        </MudTable>
+        <br />
+        <MudTextField Label="Total Members" Value="@GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide)).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true" />
+        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${GetMonthlyIncome(GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide))):N0}")" Variant="Variant.Outlined" ReadOnly="true" />
+        <MudSpacer />
     </MudStack>
 </Collapsable>
 <br />
@@ -56,17 +89,22 @@
 @code {
     private int _monthlyIncomeGoal;
 
+    private void ShowMax(TeamDistribution distribution)
+    {
+        _monthlyIncomeGoal = GetMonthlyIncome(TeamDistributions[distribution].Last().TeamMembersTotal);
+    }
+
     private int GetTeamMemberTotal(List<TeamLevel> teamDistribution)
     {
         return teamDistribution.MaxBy(x => x.TeamMembersTotal)?.TeamMembersTotal ?? 0;
     }
 
-    private int GetMonthlyIncome(int teamMembers)
+    private static int GetMonthlyIncome(int teamMembers)
     {
         return DailyGuarantee.Reverse().First(x => x.Value.NumMemberships <= teamMembers).Value.MonthlyPay;
     }
 
-    private List<TeamLevel> GetTeamLevels(int monthlyIncomeGoal)
+    private List<TeamLevel> GetTeamLevels(int monthlyIncomeGoal, TeamDistribution distribution)
     {
         if (monthlyIncomeGoal == 0)
         {
@@ -78,14 +116,15 @@
             Console.WriteLine($"GetTeamLevels - {numMembershipToMeetMonthlyIncomeGoal}");
             List<TeamLevel> teamLevels;
 
-            var minimumRequiredLevel = TeamDistribution.FirstOrDefault(teamLevel => teamLevel.TeamMembersTotal >= numMembershipToMeetMonthlyIncomeGoal);
+            var teamDistribution = TeamDistributions[distribution];
+            var minimumRequiredLevel = teamDistribution.FirstOrDefault(teamLevel => teamLevel.TeamMembersTotal >= numMembershipToMeetMonthlyIncomeGoal);
             if (minimumRequiredLevel == null)
             {
-                teamLevels = [TeamDistribution[0]];
+                teamLevels = [teamDistribution[0]];
             }
             else
             {
-                teamLevels = TeamDistribution.Where(teamLevel => teamLevel.TeamMembersTotal <= minimumRequiredLevel.TeamMembersTotal).ToList();
+                teamLevels = teamDistribution.Where(teamLevel => teamLevel.TeamMembersTotal <= minimumRequiredLevel.TeamMembersTotal).ToList();
                 Console.WriteLine($"minimumRequiredLevel - {minimumRequiredLevel.TeamMembersTotal}");
             }
 
@@ -132,8 +171,17 @@
         { Rank.NationalAmbassador, (33000, 450000, "National Ambassador") },
     };
 
-    private static readonly int[] QualifiedMarketingDirectorEnrollmentDistribution = [12, 5, 3, 2, 1];
-    private static readonly TeamLevel[] TeamDistribution = GetTeamDistribution(QualifiedMarketingDirectorEnrollmentDistribution).ToArray();
+    public enum TeamDistribution
+    {
+        TwelveWide = 0,
+        SixWide = 1,
+    }
+
+    private static readonly Dictionary<TeamDistribution, List<TeamLevel>> TeamDistributions = new()
+    {
+        { TeamDistribution.TwelveWide, GetTeamDistribution([12, 5, 3, 2, 1]) },
+        { TeamDistribution.SixWide, GetTeamDistribution([5, 3, 2, 1]) },
+    };
 
     private static List<TeamLevel> GetTeamDistribution(int[] enrollmentDistribution)
     {
@@ -153,6 +201,9 @@
 
         return teamDistribution;
     }
+
+    private static int MaxMonthlyIncomeDemo =
+        GetMonthlyIncome(TeamDistributions[TeamDistribution.TwelveWide].MaxBy(x => x.TeamMembersTotal)!.TeamMembersTotal);
 
     private class TeamLevel
     {
