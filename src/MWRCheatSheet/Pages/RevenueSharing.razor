@@ -12,8 +12,8 @@
         <MudTextField Label="Rank to Achieve" Value="@DailyGuarantee[GetRankForMonthlyIncome(_monthlyIncomeGoal)].Title" Variant="Variant.Outlined" ReadOnly="true"/>
         <MudTextField Label="Total Members" Value="@GetNumMembershipsToFundMonthlyBill(this._monthlyIncomeGoal).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true"/>
         <MudTextField Label="Guaranteed Monthly Income" Value="@($"${DailyGuarantee[GetRankForMonthlyIncome(_monthlyIncomeGoal)].MonthlyPay:N0}")" Variant="Variant.Outlined" ReadOnly="true" />
-        <br/>
-        <br/>
+        <br />
+        <MudDivider />
         <br />
         <MudText Align="Align.Center">Conservative Team Distribution <br /> (12-wide)</MudText>
         <MudStack Row="true">
@@ -40,7 +40,7 @@
         <MudTextField Label="Total Members" Value="@GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.TwelveWide)).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true" />
         <MudTextField Label="Guaranteed Monthly Income" Value="@($"${GetMonthlyIncome(GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.TwelveWide))):N0}")" Variant="Variant.Outlined" ReadOnly="true" />
         <br />
-        <br/>
+        <MudDivider />
         <br />
         <MudText Align="Align.Center">Conservative Team Distribution <br /> (6-wide)</MudText>
         <MudStack Row="true">
