@@ -1,45 +1,80 @@
 ﻿@page "/revenuesharing"
 @inherits Components.ComponentBase
-@inject IJSRuntime JSRuntime
+@using MWRCheatSheet.Components
 
-<MudText Typo="Typo.h3" GutterBottom="true" Style="text-align:center;">Cash Flow Equivalents</MudText>
-
-<MudTable Items="_cashflowEquivalents" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
-    <HeaderContent>
-        <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Investment <br /> @@ <br /> 5% APY</MudTh>
-        <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">Monthly <br /> ROI</MudTh>
-        <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">MWR <br /> Memberships</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd Style="text-align:center;" DataLabel="Investment at 5% APY">$@context.InvestmentPrinciple.ToString("N0")</MudTd>
-        <MudTd Style="text-align:center;" DataLabel="Monthly ROI">$@context.MonthlyRoi.ToString("N0") <br /> ($@((context.MonthlyRoi / 30).ToString("N0"))/day)</MudTd>
-        <MudTd Style="text-align:center;" DataLabel="MWR Memberships">@context.NumMemberships.ToString("N0")</MudTd>
-    </RowTemplate>
-</MudTable>
+<Collapsable Title="Residual Income Goal" ExpandPrompt="Show me the MONEY!">
+    <MudText>Monthly Income Goal: </MudText>
+    <MudNumericField @bind-Value="_monthlyIncomeGoal" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" Immediate="true" HelperText="Monthly Income Goal" Variant="Variant.Outlined" Min="0" Max="1000000" />
+    <br />
+    <br />
+    <MudStack>
+        <MudSpacer/>
+        <MudTextField Label="Rank to Achieve" Value="@DailyGuarantee[GetRankForMonthlyIncome(_monthlyIncomeGoal)].Title" Variant="Variant.Outlined" ReadOnly="true"/>
+        <MudTextField Label="Total Members" Value="@GetNumMembershipsToFundMonthlyBill(this._monthlyIncomeGoal).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true"/>
+        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${DailyGuarantee[GetRankForMonthlyIncome(_monthlyIncomeGoal)].MonthlyPay:N0}")" Variant="Variant.Outlined" ReadOnly="true" />
+        <br/>
+        <br/>
+        <MudText Align="Align.Center">Conservative Team Distribution</MudText>
+        <br/>
+        <MudTable Items="@_teamLevels" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
+            <HeaderContent>
+                <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Level</MudTh>
+                <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Avg QMD Enrollment</MudTh>
+                <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">QMD Total</MudTh>
+                <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">Customer Total</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd Style="text-align:center;" DataLabel="Level">@context.Name</MudTd>
+                <MudTd Style="text-align:center;" DataLabel="Avg QMD Enrollment">@context.PersonalEnrollments.ToString("N0")</MudTd>
+                <MudTd Style="text-align:center;" DataLabel="QMD Total">@context.QualifiedMarketingDirectorTotal.ToString("N0")</MudTd>
+                <MudTd Style="text-align:center;" DataLabel="Customer Total">@context.CustomerTotal.ToString("N0")</MudTd>
+            </RowTemplate>
+        </MudTable>
+        <br/>
+        <MudTextField Label="Total Members" Value="@_totalMembers.ToString("N0")" Variant="Variant.Outlined" ReadOnly="true"/>
+        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${_monthlyIncome:N0}")" Variant="Variant.Outlined" ReadOnly="true" />
+        <MudSpacer/>
+    </MudStack>
+</Collapsable>
 <br />
 <br />
-<MudText Typo="Typo.h3" GutterBottom="true">Bill Killer</MudText>
-<br/>
-<MudText>Monthly bill amount: </MudText>
-<MudNumericField @bind-Value="_monthlyBillAmount" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" Immediate="true" HelperText="Monthly Bill Amount" Variant="Variant.Outlined" Min="0" Max="1000000" />
-<br/>
-<br/>
-<MudText>@(_monthlyBillAmount == 0 ? "Memberships pay your bills by creating DAILY, passive, residual income!" : $"Funded w/ {GetNumMembershipsToFundMonthlyBill(this._monthlyBillAmount):N0} Memberships (Direct AND Indirect)")</MudText>
+<Collapsable Title="Cash Flow Equivalents">
+    <MudTable Items="_cashflowEquivalents" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
+        <HeaderContent>
+            <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Investment <br /> @@ <br /> 5% APY</MudTh>
+            <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">Monthly <br /> ROI</MudTh>
+            <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">MWR <br /> Memberships</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd Style="text-align:center;" DataLabel="Investment at 5% APY">$@context.InvestmentPrinciple.ToString("N0")</MudTd>
+            <MudTd Style="text-align:center;" DataLabel="Monthly ROI">$@context.MonthlyRoi.ToString("N0") <br /> ($@((context.MonthlyRoi / 30).ToString("N0"))/day)</MudTd>
+            <MudTd Style="text-align:center;" DataLabel="MWR Memberships">@context.NumMemberships.ToString("N0")</MudTd>
+        </RowTemplate>
+    </MudTable>
+</Collapsable>
 
 @code {
-    private int _monthlyBillAmount;
+    private List<TeamLevel> _teamLevels = new();
+    private int _totalMembers;
+    private int _monthlyIncome;
 
-    private int GetNumMembershipsToFundMonthlyBill(int monthlyBillAmount)
+    private int _monthlyIncomeGoal;
+
+    protected override void OnInitialized()
     {
-        var numMembershipsToPayMonthlyBill = 0;
+        _teamLevels = GetTeamDistribution(QualifiedMarketingDirectorEnrollmentDistribution);
+        _totalMembers = _teamLevels.Select(teamDistribution => teamDistribution.TotalMembers).Aggregate((runningTotal, next) => runningTotal + next);
+        _monthlyIncome = DailyGuarantee.Reverse().First(x => x.Value.NumMemberships <= _totalMembers).Value.MonthlyPay;
+    }
 
-        var minimumRankToPayMonthlyBill = DailyGuarantee.First(x => x.Value.MonthlyPay >= monthlyBillAmount);
-        if (minimumRankToPayMonthlyBill.Key != Rank.None)
-        {
-            numMembershipsToPayMonthlyBill = minimumRankToPayMonthlyBill.Value.NumMemberships;
-        }
+    private static Rank GetRankForMonthlyIncome(int monthlyIncome)
+        => DailyGuarantee.First(x => x.Value.MonthlyPay >= monthlyIncome).Key;
 
-        return numMembershipsToPayMonthlyBill;
+    private static int GetNumMembershipsToFundMonthlyBill(int monthlyBillAmount)
+    {
+        var minimumRankToPayMonthlyBill = GetRankForMonthlyIncome(monthlyBillAmount);
+
+        return minimumRankToPayMonthlyBill != Rank.None ? DailyGuarantee[minimumRankToPayMonthlyBill].NumMemberships : 0;
     }
 
     private List<CashflowEquivalent> _cashflowEquivalents = new()
@@ -51,24 +86,65 @@
         new(Rank.ED5),
     };
 
-    private static readonly Dictionary<Rank, (int NumMemberships, int MonthlyPay)> DailyGuarantee = new()
+    private static readonly Dictionary<Rank, (int NumMemberships, int MonthlyPay, string Title)> DailyGuarantee = new()
     {
-        { Rank.ED1, (3, 150) },
-        { Rank.ED2, (12, 600 ) },
-        { Rank.ED3, (50, 1500) },
-        { Rank.ED4, (90, 3000) },
-        { Rank.ED5, (180, 4500) },
-        { Rank.Regional1, (300, 6000) },
-        { Rank.Regional2, (480, 9000) },
-        { Rank.Regional3, (750, 12000) },
-        { Rank.Regional4, (1200, 19500) },
-        { Rank.Regional5, (1800, 30000) },
-        { Rank.NationalDirector, (3000, 45000) },
-        { Rank.VicePresidentialDirector, (6000, 90000) },
-        { Rank.PresidentialDirector, (12000, 150000) },
-        { Rank.ExecutiveChairman, (21000, 300000) },
-        { Rank.NationalAmbassador, (33000, 450000) },
+        { Rank.None, (0, 0, "None") },
+        { Rank.ED1, (3, 150, "Executive Director") },
+        { Rank.ED2, (12, 600, "2* Executive Director") },
+        { Rank.ED3, (50, 1500, "3* Executive Director") },
+        { Rank.ED4, (90, 3000, "4* Executive Director") },
+        { Rank.ED5, (180, 4500, "5* Executive Director") },
+        { Rank.Regional1, (300, 6000, "Regional Director") },
+        { Rank.Regional2, (480, 9000, "2* Regional Director") },
+        { Rank.Regional3, (750, 12000, "3* Regional Director") },
+        { Rank.Regional4, (1200, 19500, "4* Regional Director") },
+        { Rank.Regional5, (1800, 30000, "5* Regional Director") },
+        { Rank.NationalDirector, (3000, 45000, "National Director") },
+        { Rank.VicePresidentialDirector, (6000, 90000, "Vice Presidential Director") },
+        { Rank.PresidentialDirector, (12000, 150000, "Presidential Director") },
+        { Rank.ExecutiveChairman, (21000, 300000, "Executive Chairman") },
+        { Rank.NationalAmbassador, (33000, 450000, "National Ambassador") },
     };
+
+    private readonly int[] QualifiedMarketingDirectorEnrollmentDistribution = [12, 5, 3, 2, 1];
+
+    private static List<TeamLevel> GetTeamDistribution(int[] enrollmentDistribution)
+    {
+        var teamDistribution = new List<TeamLevel>();
+
+        for (var i = 0; i < enrollmentDistribution.Length; i++)
+        {
+            if (i == 0)
+            {
+                teamDistribution.Add(new("You", enrollmentDistribution[i], null));
+            }
+            else
+            {
+                teamDistribution.Add(new($"Level {(i+1)}", enrollmentDistribution[i], teamDistribution[i-1]));
+            }
+        }
+
+        return teamDistribution;
+    }
+
+    private class TeamLevel
+    {
+        public TeamLevel(string name, int personalEnrollments, TeamLevel? previousLevel)
+        {
+            this.Name = name;
+            this.PersonalEnrollments = personalEnrollments;
+            this.QualifiedMarketingDirectorTotal = personalEnrollments * previousLevel?.QualifiedMarketingDirectorTotal ?? personalEnrollments;
+           
+            // every QMD should have 1 customer
+            this.CustomerTotal = this.QualifiedMarketingDirectorTotal;
+        }
+
+        public string Name { get; }
+        public int PersonalEnrollments { get; }
+        public int QualifiedMarketingDirectorTotal { get; }
+        public int CustomerTotal { get; }
+        public int TotalMembers => this.QualifiedMarketingDirectorTotal + this.CustomerTotal;
+    }
 
     private class CashflowEquivalent
     {
