@@ -4,7 +4,7 @@
 
 <Collapsable Title="Residual Income Goal" ExpandPrompt="Show me the MONEY!">
     <MudText>Monthly Income Goal: </MudText>
-    <MudNumericField @bind-Value="_monthlyIncomeGoal" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" Immediate="true" HelperText="Monthly Income Goal" Variant="Variant.Outlined" Min="0" Max="1000000" />
+    <MudNumericField @bind-Value="_monthlyIncomeGoal" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" Immediate="true" HelperText="Monthly Income Goal" Variant="Variant.Outlined" Min="0" Max="40000" />
     <br />
     <br />
     <MudStack>
@@ -16,7 +16,7 @@
         <br/>
         <MudText Align="Align.Center">Conservative Team Distribution</MudText>
         <br/>
-        <MudTable Items="@_teamLevels" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
+        <MudTable Items="@GetTeamLevels(_monthlyIncomeGoal)" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
             <HeaderContent>
                 <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Level</MudTh>
                 <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Avg QMD Enrollment</MudTh>
@@ -31,8 +31,8 @@
             </RowTemplate>
         </MudTable>
         <br/>
-        <MudTextField Label="Total Members" Value="@_totalMembers.ToString("N0")" Variant="Variant.Outlined" ReadOnly="true"/>
-        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${_monthlyIncome:N0}")" Variant="Variant.Outlined" ReadOnly="true" />
+        <MudTextField Label="Total Members" Value="@GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal)).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true" />
+        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${GetMonthlyIncome(GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal))):N0}")" Variant="Variant.Outlined" ReadOnly="true" />
         <MudSpacer/>
     </MudStack>
 </Collapsable>
@@ -54,17 +54,43 @@
 </Collapsable>
 
 @code {
-    private List<TeamLevel> _teamLevels = new();
-    private int _totalMembers;
-    private int _monthlyIncome;
-
     private int _monthlyIncomeGoal;
 
-    protected override void OnInitialized()
+    private int GetTeamMemberTotal(List<TeamLevel> teamDistribution)
     {
-        _teamLevels = GetTeamDistribution(QualifiedMarketingDirectorEnrollmentDistribution);
-        _totalMembers = _teamLevels.Select(teamDistribution => teamDistribution.TotalMembers).Aggregate((runningTotal, next) => runningTotal + next);
-        _monthlyIncome = DailyGuarantee.Reverse().First(x => x.Value.NumMemberships <= _totalMembers).Value.MonthlyPay;
+        return teamDistribution.MaxBy(x => x.TeamMembersTotal)?.TeamMembersTotal ?? 0;
+    }
+
+    private int GetMonthlyIncome(int teamMembers)
+    {
+        return DailyGuarantee.Reverse().First(x => x.Value.NumMemberships <= teamMembers).Value.MonthlyPay;
+    }
+
+    private List<TeamLevel> GetTeamLevels(int monthlyIncomeGoal)
+    {
+        if (monthlyIncomeGoal == 0)
+        {
+            return new();
+        }
+        else
+        {
+            var numMembershipToMeetMonthlyIncomeGoal = GetNumMembershipsToFundMonthlyBill(monthlyIncomeGoal);
+            Console.WriteLine($"GetTeamLevels - {numMembershipToMeetMonthlyIncomeGoal}");
+            List<TeamLevel> teamLevels;
+
+            var minimumRequiredLevel = TeamDistribution.FirstOrDefault(teamLevel => teamLevel.TeamMembersTotal >= numMembershipToMeetMonthlyIncomeGoal);
+            if (minimumRequiredLevel == null)
+            {
+                teamLevels = [TeamDistribution[0]];
+            }
+            else
+            {
+                teamLevels = TeamDistribution.Where(teamLevel => teamLevel.TeamMembersTotal <= minimumRequiredLevel.TeamMembersTotal).ToList();
+                Console.WriteLine($"minimumRequiredLevel - {minimumRequiredLevel.TeamMembersTotal}");
+            }
+
+            return teamLevels.OrderByDescending(x => x.PersonalEnrollments).ToList();
+        }
     }
 
     private static Rank GetRankForMonthlyIncome(int monthlyIncome)
@@ -88,7 +114,7 @@
 
     private static readonly Dictionary<Rank, (int NumMemberships, int MonthlyPay, string Title)> DailyGuarantee = new()
     {
-        { Rank.None, (0, 0, "None") },
+        { Rank.None, (0, 0, "N/A") },
         { Rank.ED1, (3, 150, "Executive Director") },
         { Rank.ED2, (12, 600, "2* Executive Director") },
         { Rank.ED3, (50, 1500, "3* Executive Director") },
@@ -106,7 +132,8 @@
         { Rank.NationalAmbassador, (33000, 450000, "National Ambassador") },
     };
 
-    private readonly int[] QualifiedMarketingDirectorEnrollmentDistribution = [12, 5, 3, 2, 1];
+    private static readonly int[] QualifiedMarketingDirectorEnrollmentDistribution = [12, 5, 3, 2, 1];
+    private static readonly TeamLevel[] TeamDistribution = GetTeamDistribution(QualifiedMarketingDirectorEnrollmentDistribution).ToArray();
 
     private static List<TeamLevel> GetTeamDistribution(int[] enrollmentDistribution)
     {
@@ -129,11 +156,14 @@
 
     private class TeamLevel
     {
+        private readonly TeamLevel? _previousLevel;
+
         public TeamLevel(string name, int personalEnrollments, TeamLevel? previousLevel)
         {
+            _previousLevel = previousLevel;
             this.Name = name;
             this.PersonalEnrollments = personalEnrollments;
-            this.QualifiedMarketingDirectorTotal = personalEnrollments * previousLevel?.QualifiedMarketingDirectorTotal ?? personalEnrollments;
+            this.QualifiedMarketingDirectorTotal = personalEnrollments * _previousLevel?.QualifiedMarketingDirectorTotal ?? personalEnrollments;
            
             // every QMD should have 1 customer
             this.CustomerTotal = this.QualifiedMarketingDirectorTotal;
@@ -144,6 +174,7 @@
         public int QualifiedMarketingDirectorTotal { get; }
         public int CustomerTotal { get; }
         public int TotalMembers => this.QualifiedMarketingDirectorTotal + this.CustomerTotal;
+        public int TeamMembersTotal => this.TotalMembers + (_previousLevel?.TeamMembersTotal ?? 0);
     }
 
     private class CashflowEquivalent
