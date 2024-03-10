@@ -49,23 +49,43 @@
             <MudSpacer />
         </MudStack>
         <br />
-        <MudTable Items="@GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide)" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
-            <HeaderContent>
-                <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Level</MudTh>
-                <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Avg QMD Enrollment</MudTh>
-                <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">QMD Total</MudTh>
-                <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">Customer Total</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd Style="text-align:center;" DataLabel="Level">@context.Name</MudTd>
-                <MudTd Style="text-align:center;" DataLabel="Avg QMD Enrollment">@context.PersonalEnrollments.ToString("N0")</MudTd>
-                <MudTd Style="text-align:center;" DataLabel="QMD Total">@context.QualifiedMarketingDirectorTotal.ToString("N0")</MudTd>
-                <MudTd Style="text-align:center;" DataLabel="Customer Total">@context.CustomerTotal.ToString("N0")</MudTd>
-            </RowTemplate>
-        </MudTable>
-        <br />
-        <MudTextField Label="Total Members" Value="@GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide)).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true" />
-        <MudTextField Label="Guaranteed Monthly Income" Value="@($"${GetMonthlyIncome(GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide))):N0}")" Variant="Variant.Outlined" ReadOnly="true" />
+        @if (GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide).FirstOrDefault()?.TeamMembersTotal is 0)
+        {
+            <MudText Align="Align.Center">$@_monthlyIncomeGoal.ToString("N0")/mo cannot be achieved with a 6-wide, conservative team distribution.</MudText>
+        }
+        else
+        {
+            <MudTable Items="@GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide)" Breakpoint="Breakpoint.None" Hover="true" SortLabel="Sort By" Elevation="0">
+                <HeaderContent>
+                    <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Level</MudTh>
+                    <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Avg QMD Enrollment</MudTh>
+                    <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">QMD Total</MudTh>
+                    <MudTh Style="text-align:center; vertical-align:top; border-color:rgb(27,53,115);">Customer Total</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd Style="text-align:center;" DataLabel="Level">@context.Name</MudTd>
+                    <MudTd Style="text-align:center;" DataLabel="Avg QMD Enrollment">@context.PersonalEnrollments.ToString("N0")</MudTd>
+                    <MudTd Style="text-align:center;" DataLabel="QMD Total">@context.QualifiedMarketingDirectorTotal.ToString("N0")</MudTd>
+                    <MudTd Style="text-align:center;" DataLabel="Customer Total">@context.CustomerTotal.ToString("N0")</MudTd>
+                </RowTemplate>
+            </MudTable>
+            <br />
+            <MudTextField Label="Total Members" Value="@GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide)).ToString("N0")" Variant="Variant.Outlined" ReadOnly="true" />
+            <MudTextField Label="Guaranteed Monthly Income" Value="@($"${GetMonthlyIncome(GetTeamMemberTotal(GetTeamLevels(_monthlyIncomeGoal, TeamDistribution.SixWide))):N0}")" Variant="Variant.Outlined" ReadOnly="true" />
+        }
+        <MudDivider />
+        <MudStack Row="true">
+            <MudSpacer />
+            <MudButton OnClick="@(() => _monthlyIncomeGoal = MillionaireResidualIncomeClubMonthlyThreshold)" Color="Color.Primary">Show Millionaire Residual Income Club</MudButton>
+            <MudSpacer />
+        </MudStack>
+        <MudStack Row="true">
+            <MudSpacer />
+            <MudTooltip Text="Once your residuals reach the equivalent of $1Million at a 10% rate of return (rounded to $8,400/mo), you enter the Millionare Residual Income Club.  In this club, you additionally participate in corporate revenue sharing." ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+                <MudIconButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Icon="@Icons.Material.Filled.QuestionMark" />
+            </MudTooltip>
+            <MudSpacer />
+        </MudStack>
         <MudSpacer />
     </MudStack>
 </Collapsable>
@@ -87,6 +107,8 @@
 </Collapsable>
 
 @code {
+    private const int MillionaireResidualIncomeClubMonthlyThreshold = 8400;
+
     private int _monthlyIncomeGoal;
 
     private void ShowMax(TeamDistribution distribution)
