@@ -78,10 +78,10 @@
         <br />
         <MudStack Row="true">
             <MudSpacer />
-            <MudTooltip IsVisible="_millionaireClubTooltipVisible" ShowOnClick="true" ShowOnFocus="false" ShowOnHover="false">
+            <MudTooltip IsVisible="_millionaireClubTooltipVisible" ShowOnClick="false" ShowOnFocus="false" ShowOnHover="false">
                 <ChildContent>
                     <MudText Color="Color.Primary" Align="Align.Center">
-                        Show Millionaire Residual Income Club &nbsp;
+                        <div @onclick="() => _monthlyIncomeGoal = MillionaireResidualIncomeClubMonthlyThreshold">Show Millionaire Residual Income Club</div>
                         <MudIconButton @onclick="() => _millionaireClubTooltipVisible = true" Class="mud-theme-primary rounded-circle" Color="Color.Primary" Size="Size.Small" Icon="@Icons.Material.Filled.QuestionMark"/>
                     </MudText>
                 </ChildContent>
