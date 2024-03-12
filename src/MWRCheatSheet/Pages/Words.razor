@@ -45,6 +45,15 @@
                     <MudText>"Let me show you this 7min video, rather than me trying to explain it, lol. <br/><br/> If you have any questions, I'm going to connect you with someone FAR more qualified than me for answers."</MudText>
                 </MudStack>
                 <MudStack Row="true">
+                    <MudSpacer/>
+                    <MudStack>
+                        <MudButton OnClick="@(() => _show72HourMoneyChallengeVideo = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Watch Now!</MudButton>
+                        <MudButton OnClick="@(() => _show1on1Presentation = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Show 1-on1 Presentation</MudButton>
+                        <br/>
+                    </MudStack>
+                    <MudSpacer />
+                </MudStack>
+                <MudStack Row="true">
                     <MudText>#2: </MudText>
                     <MudButton OnClick="@(() => Dialog.Show<ShareMoneyChallengeDialog>())" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
                 </MudStack>
@@ -108,12 +117,34 @@
         </MudCollapse>
     </MudStack>
 </MudPaper>
+
+<MudDialog @bind-IsVisible="_show72HourMoneyChallengeVideo" Options="@(new DialogOptions() {  })">
+    <DialogContent>
+        <MudStack>
+            <MudText Align="Align.Center">English</MudText>
+            <iframe title="vimeo-player" src="https://player.vimeo.com/video/912771676?h=8bc20408ad" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+            <MudText Align="Align.Center">Español</MudText>
+            <iframe title="vimeo-player" src="https://player.vimeo.com/video/912771906?h=475784ef31" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+        </MudStack>
+    </DialogContent>
+</MudDialog>
+
+<MudDialog @bind-IsVisible="_show1on1Presentation">
+    <DialogContent>
+        <MudStack>
+            <MudText Align="Align.Center">English</MudText>
+            <MudImage Src="images/72-HourMoneyChallengeOverview_1on1_ENG.png" />
+        </MudStack>
+    </DialogContent>
+</MudDialog>
 @code {
     private bool _askExpanded;
     private bool _shareExpanded;
     private bool _connectExpanded;
     private bool _readyForChallengedExpanded;
     private bool _questionsExpanded;
+    private bool _show72HourMoneyChallengeVideo;
+    private bool _show1on1Presentation;
 
     private void OnShowMembershipEnrollmentDialog()
     {
