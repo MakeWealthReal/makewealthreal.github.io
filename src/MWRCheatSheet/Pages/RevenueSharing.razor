@@ -49,6 +49,7 @@
                 <MudNumericField @bind-Value="_level6Custom" Immediate="true" HelperText="Level 3" Variant="Variant.Outlined" Min="1" Max="12" />
             </MudStack>
             <br />
+            <br />
             <TeamDistribution @bind-MonthlyIncomeGoal="@_monthlyIncomeGoal" 
                 Distribution="@(TeamLevel.GetTeamDistribution([_level1Custom, _level2Custom, _level3Custom, _level4Custom, _level5Custom, _level6Custom]))" />
         </span>
