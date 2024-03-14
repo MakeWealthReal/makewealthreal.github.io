@@ -191,7 +191,8 @@
                 @if (_pageLoaded)
                 {
                     <CopyTextMultilingual Description="Join MWR"
-                                         
+                                          Url="@Constants.JoinMakeWealthRealEnglish(AppState!.UserName)"
+
                                           EnglishTextToCopy="@Constants.JoinMakeWealthRealEnglish(AppState!.UserName)"
                                           EnglishTooltip="English shareable copied!"
                                           EnglishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)"
@@ -240,6 +241,11 @@
                     </MudStack>
                     <br />
                 }
+                <CopyText Description="MWR Events"
+                          Url="http://MakeWealthRealEvents.com"
+                          Tooltip="Copied Shareable"
+                          TextToCopy="http://MakeWealthRealEvents.com" />
+                <br />
                 <CopyText Description=@CheatSheet.Description
                           Tooltip=@CheatSheet.Tooltip
                           TextToCopy=@CheatSheet.Content
