@@ -53,13 +53,17 @@
             <br/>
             @if (_selectedShareOption == ShareOptions.InPerson)
             {
-                <MudText Align="Align.Center">@PointingDownEmoji<br/><br/></MudText>
-                <MudStack Row="true">
-                    <MudSpacer/>
-                    <MudStack>
+                <MudStack>
+                    <MudStack Row="true">
+                        <MudText>#1: </MudText>
                         <MudButton OnClick="@(() => _show1On1Presentation = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Show 1-on1 Presentation</MudButton>
                     </MudStack>
-                    <MudSpacer/>
+                    <MudStack Row="true">
+                        <MudText>#2: </MudText>
+                        <MudText>So, do you want some of the money, or all of the money?</MudText>
+                    </MudStack>
+                    <br />
+                    <ProspectResponse Url="@Constants.JoinMakeWealthRealEnglish(this.AppState!.UserName)" />
                 </MudStack>
             }
             @if (_selectedShareOption == ShareOptions.OnPhone)
@@ -82,29 +86,7 @@
                         <MudText>"So are you ready to take the challenge?"</MudText>
                     </MudStack>
                     <br/>
-                    <MudText Align="Align.Center">Prospect Response</MudText>
-                    <MudStack Row="true">
-                        <MudSpacer/>
-                        <MudRadioGroup @bind-Value="_selectedProspectResponse">
-                            <MudRadio Value="ProspectResponse.SignUp" Color="Color.Primary" Size="Size.Small">"Yes"</MudRadio>
-                            <MudRadio Value="ProspectResponse.Questions" Color="Color.Secondary" Size="Size.Medium">"I have a question"</MudRadio>
-                        </MudRadioGroup>
-                        <MudSpacer/>
-                    </MudStack>
-                    <MudDivider />
-                    @if (_selectedProspectResponse == ProspectResponse.SignUp)
-                    {
-                        <MudText Align="Align.Center">"Great, here's how you take the challenge!"<br/>@PointingDownEmoji</MudText>
-                        <MudStack Row="true">
-                            <MudSpacer/>
-                            <MudButton OnClick="@OnShowMembershipEnrollmentDialog" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
-                            <MudSpacer/>
-                        </MudStack>
-                    }
-                    @if (_selectedProspectResponse == ProspectResponse.Questions)
-                    {
-                        <MudText Align="Align.Center"> Go to the "Connect" section below <br/> @(PointingDownEmoji)</MudText>
-                    }
+                    <ProspectResponse Url="@Constants.MembershipEnrollmentUrl(this.AppState!.UserName)" />
                 </MudStack>
             }
         </MudCollapse>

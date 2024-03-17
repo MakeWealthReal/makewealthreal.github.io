@@ -1,0 +1,32 @@
+﻿@inherits Components.ComponentBase
+
+@if(!this.Filter.Any() || this.Highlights.Intersect(this.Filter).Any())
+{
+    <MudCard>
+        <MudStack>
+            <iframe width="560" height="315" src="@Url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <MudStack Row="true">
+                <MudSpacer />
+                <CopyTextMinimal Description="@Description"
+                                 Tooltip="Testimonial Copied!"
+                                 ImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)"
+                                 TextToCopy="@($"{Description}{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}{Url}")" />
+                <MudSpacer />
+            </MudStack>
+        </MudStack>
+    </MudCard>
+}
+
+@code {
+    [Parameter]
+    public string Url { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
+    [Parameter]
+    public Valueable[] Highlights { get; set; }
+
+    [Parameter]
+    public Valueable[] Filter { get; set; }
+}
