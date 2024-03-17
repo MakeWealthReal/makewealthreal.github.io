@@ -20,7 +20,7 @@ public enum Rank
     NationalAmbassador = 15,
 }
 
-public enum Valueable
+public enum Highlight
 {
     MoneyChallenge,
     ReduceMyTaxes,
@@ -35,6 +35,9 @@ public enum Valueable
     KeysToHomeOwnership,
     Bonuses,
     Residuals,
+    Couple,
+    Military,
+    GenYGenZ,
 }
 
 public class Constants
