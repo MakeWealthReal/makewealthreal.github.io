@@ -1,7 +1,6 @@
 ﻿@inherits Components.ComponentBase
 
-@if(!this.Filter.Any() || this.Highlights.Intersect(this.Filter).Any())
-{
+<div style="display:@(!this.Filter.Any() || this.Highlights.Intersect(this.Filter).Any() ? "block" : "none");">
     <MudCard>
         <MudStack>
             <iframe width="560" height="315" src="@Url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -15,7 +14,7 @@
             </MudStack>
         </MudStack>
     </MudCard>
-}
+</div>
 
 @code {
     [Parameter]
