@@ -1,28 +1,18 @@
 ﻿@inherits Components.ComponentBase
 
-<MudText Align="Align.Center">Prospect Response</MudText>
-<MudStack Row="true">
-    <MudSpacer />
-    <MudRadioGroup @bind-Value="_selectedProspectResponse">
-        <MudRadio Value="Response.SignUp" Color="Color.Primary" Size="Size.Small">"Yes"</MudRadio>
-        <MudRadio Value="Response.Questions" Color="Color.Secondary" Size="Size.Medium">"I have a question"</MudRadio>
-    </MudRadioGroup>
-    <MudSpacer />
-</MudStack>
-<MudDivider />
-@if (_selectedProspectResponse == Response.SignUp)
-{
-    <MudText Align="Align.Center">"Great, here's how you take the challenge!"<br />@PointingDownEmoji</MudText>
-    <MudStack Row="true">
-        <MudSpacer />
-        <MudButton OnClick="@(() => _showMembershipEnrollmentDialog = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
-        <MudSpacer />
-    </MudStack>
-}
-@if (_selectedProspectResponse == Response.Questions)
-{
-    <MudText Align="Align.Center"> Go to the "Connect" section below <br /> @(PointingDownEmoji)</MudText>
-}
+<BinaryChoice Description="Prospect Response" FirstChoiceLabel="Yes" SecondChoiceLabel="I have a question">
+    <FirstChoiceContent>
+        <MudText Align="Align.Center">"Great, here's how you take the challenge!"<br />@PointingDownEmoji</MudText>
+        <MudStack Row="true">
+            <MudSpacer />
+            <MudButton OnClick="@(() => _showMembershipEnrollmentDialog = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
+            <MudSpacer />
+        </MudStack>
+    </FirstChoiceContent>
+    <SecondChoiceContent>
+        <MudText Align="Align.Center"> Go to the "Connect" section below <br /> @(PointingDownEmoji)</MudText>
+    </SecondChoiceContent>
+</BinaryChoice>
 
 <MudDialog @bind-IsVisible="_showMembershipEnrollmentDialog">
     <DialogContent>
@@ -35,8 +25,6 @@
 </MudDialog>
 
 @code {
-    private ShareOptions _selectedShareOption = ShareOptions.InPerson;
-    private Response _selectedProspectResponse = Response.SignUp;
     private bool _showMembershipEnrollmentDialog;
 
     [Parameter]
@@ -45,17 +33,5 @@
     protected override void OnInitialized()
     {
         this.Url = this.Url ?? Constants.JoinMakeWealthRealEnglish(this.AppState!.UserName!);
-    }
-
-    private enum ShareOptions
-    {
-        InPerson = 0,
-        OnPhone = 1,
-    }
-
-    private enum Response
-    {
-        SignUp = 0,
-        Questions = 1,
     }
 }
