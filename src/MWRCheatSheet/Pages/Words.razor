@@ -15,15 +15,6 @@
         <MudButton OnClick="@(() => _askExpanded = !_askExpanded)" Color="Color.Primary">@(_askExpanded ? "Hide" : "Show me how!")</MudButton>
         <MudDivider/>
         <MudCollapse Expanded="_askExpanded">
-            <MudStack Row="true">
-                <MudSpacer/>
-                <MudText>#1: </MudText>
-                <MudText>"Do you have 7 minutes?"</MudText>
-                <MudSpacer/>
-            </MudStack>
-            <MudText Align="Align.Center">@(PointingDownEmoji)</MudText>
-            <br/>
-            <br/>
             <MudText Align="Align.Center">Tap Image to Download</MudText>
             <DownloadableImage Alt="72-Hour Money Challenge | Share" ImageUri="images/words/72hour-share.jpeg"/>
             <DownloadableImage Alt="72-Hour Money Challenge | Response" ImageUri="images/words/72hour-response.jpeg"/>
@@ -56,6 +47,10 @@
                 <MudStack>
                     <MudStack Row="true">
                         <MudText>#1: </MudText>
+                        <MudText>Do you have 5 minutes?</MudText>
+                    </MudStack>
+                    <MudStack Row="true">
+                        <MudText>#2: </MudText>
                         <MudButton OnClick="@(() => _show1On1Presentation = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Show 1-on1 Presentation</MudButton>
                     </MudStack>
                     <MudStack Row="true">
@@ -71,11 +66,11 @@
                 <MudStack>
                     <MudStack Row="true">
                         <MudText>#1: </MudText>
-                        <MudText>"Let me show you this 7min video, rather than me trying to explain it, lol. <br/><br/> If you have any questions, I'm going to connect you with someone FAR more qualified than me for answers."</MudText>
+                        <MudText>"Let me show you this 2min video, it explains it perfectly, lol. <br/><br/> If you have any questions, I'm going to connect you with someone FAR more qualified than me for answers."</MudText>
                     </MudStack>
                     <MudStack Row="true">
                         <MudText>#2: </MudText>
-                        <MudButton OnClick="@(() => Dialog.Show<ShareMoneyChallengeDialog>())" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
+                        <MudButton OnClick="@(() => _show72HourMoneyChallengeShareable = true)" Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">Tap to Share Link</MudButton>
                     </MudStack>
                     <MudStack Row="true">
                         <MudText>#3: </MudText>
@@ -149,6 +144,23 @@
         </MudContainer>
     </DialogContent>
 </MudDialog>
+
+<MudDialog @bind-IsVisible="_show72HourMoneyChallengeShareable">
+    <DialogContent>
+        <CopyTextMultilingual Description="@($"72-Hour Money Challenge")"
+                              Duration="@new(0, 1, 30)"
+                              Url="https://www.ms1.megaschool.me/72hr-money-challenge"
+                              
+                              EnglishTextToCopy="@(Shareables.MoneyChallenge.English.Message)"
+                              EnglishTooltip="@(Shareables.MoneyChallenge.English.Tooltip)"
+                              EnglishImageUrl="@(Shareables.MoneyChallenge.ImageUrl)"
+
+                              SpanishTextToCopy="@(Shareables.MoneyChallenge.Spanish!.Message)"
+                              SpanishTooltip="@(Shareables.MoneyChallenge.Spanish!.Tooltip)"
+                              SpanishImageUrl="@(Shareables.MoneyChallenge.ImageUrl)" />
+    </DialogContent>
+</MudDialog>
+
 @code {
     private bool _askExpanded;
     private bool _shareExpanded;
@@ -157,6 +169,7 @@
     private bool _questionsExpanded;
     private bool _show72HourMoneyChallengeVideo;
     private bool _show1On1Presentation;
+    private bool _show72HourMoneyChallengeShareable;
     private string _72Hr1On1OverviewImageUrl = GetImageUrl(Image.Overview1On1English);
     private string _72Hr1On1RevenueSharingImageUrl = GetImageUrl(Image.RevenueShare1On1English);
     private ShareOptions _selectedShareOption = ShareOptions.InPerson;
