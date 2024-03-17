@@ -8,18 +8,8 @@
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 <Collapsable Title="Essentials" ExpandPrompt="Show">
-    <MudStack>
-        <MudSpacer />
-        <MudStack Row="true">
-            <MudSpacer />
-            <MudRadioGroup @bind-Value="_selectedStrategy">
-                <MudRadio Value="Strategy.Corporate" Color="Color.Primary" Size="Size.Small">Corporate</MudRadio>
-                <MudRadio Value="Strategy.EDM" Color="Color.Secondary" Size="Size.Medium">EDM</MudRadio>
-            </MudRadioGroup>
-            <MudSpacer />
-        </MudStack>
-        @if (_selectedStrategy == Strategy.Corporate)
-        {
+    <BinaryChoice Description="Strategy" FirstChoiceLabel="Corporate" SecondChoiceLabel="EDM">
+        <FirstChoiceContent>
             <CopyTextMultilingual Description="@Shareables.MoneyChallenge.Description"
                                   Duration="@Shareables.MoneyChallenge.Duration"
                                   Url="@Shareables.MoneyChallenge.English.Url"
@@ -42,9 +32,8 @@
                                   SpanishTextToCopy="@VideoShareable("MWR Opportunity", "https://www.ms1.megaschool.me/mwr-opportunity-full", new (0, 0, 19,26))"
                                   SpanishTooltip="Español shareable copied!"
                                   SpanishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
-        }
-        @if (_selectedStrategy == Strategy.EDM)
-        {
+        </FirstChoiceContent>
+        <SecondChoiceContent>
             <CopyText Description="72-Hour Money Challenge Overview"
                       Duration="new(0, 15, 0)"
                       Url="https://www.ms1.megaschool.me/72hr-overview"
@@ -57,8 +46,8 @@
                       Tooltip="Shareable copied!"
                       TextToCopy="@($"72-Hour Money Challenge - More Information{Environment.NewLine}{PointingDownEmoji}{Environment.NewLine}(25min){Environment.NewLine}https://www.ms1.megaschool.me/72hr-moreinfo")"
                       ImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
-        }
-    </MudStack>
+        </SecondChoiceContent>
+    </BinaryChoice>
 </Collapsable>
 <br/>
 <br/>
