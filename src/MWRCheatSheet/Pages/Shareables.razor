@@ -300,7 +300,6 @@
 @code {
     private bool _pageLoaded;
     private bool _webSharingAvailable;
-    private Strategy _selectedStrategy = Strategy.Corporate;
 
     public static readonly Model.Shareable MoneyChallenge = new (
         $"72-Hour Money Challenge",
@@ -322,11 +321,5 @@
 
         _pageLoaded = true;
         this.StateHasChanged();
-    }
-
-    private enum Strategy
-    {
-        Corporate = 0,
-        EDM = 1,
     }
 }
