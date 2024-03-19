@@ -11,7 +11,7 @@
     <BinaryChoice Description="Strategy" FirstChoiceLabel="Corporate" SecondChoiceLabel="EDM">
         <FirstChoiceContent>
             <MudStack>
-                <CopyTextMultilingual Description="@Shareables.MoneyChallenge.Description"
+                <ShareableVideoMultilingual Description="@Shareables.MoneyChallenge.Description"
                                       Duration="@Shareables.MoneyChallenge.Duration"
                                       Url="@Shareables.MoneyChallenge.English.Url"
                                       
@@ -22,7 +22,7 @@
                                       SpanishTextToCopy="@(Shareables.MoneyChallenge.Spanish!.Message)"
                                       SpanishTooltip="@(Shareables.MoneyChallenge.Spanish!.Tooltip)"
                                       SpanishImageUrl="@(Shareables.MoneyChallenge.ImageUrl)" />
-                <CopyTextMultilingual Description="@($"MWR Opportunity")"
+                <ShareableVideoMultilingual Description="@($"MWR Opportunity")"
                                       Duration="new(0, 10, 0)"
                                       Url="https://www.ms1.megaschool.me/mwr-opportunity-10min"
                                       
@@ -99,7 +99,7 @@
 <br />
 <Collapsable Title="Services" ExpandPrompt="Show">
     <MudStack>
-        <CopyTextMultilingual Description="@($"MWR Wealth Membership")"
+        <ShareableVideoMultilingual Description="@($"MWR Wealth Membership")"
                               Url="https://www.ms1.megaschool.me/mwr-membership"
                               Duration="new(0, 8, 0)"
                               
@@ -113,7 +113,7 @@
         <br />
         @if (_pageLoaded)
         {
-            <CopyTextMultilingual Description="Instant Pay Raise"
+            <ShareableVideoMultilingual Description="Instant Pay Raise"
                                   Url="@Constants.InstantPayRaiseUrlEnglish(AppState!.UserName)"
                                   
                                   EnglishTextToCopy="@Constants.InstantPayRaiseUrlEnglish(AppState!.UserName)"
@@ -138,7 +138,7 @@
             </MudStack>
             <br />
         }
-        <CopyTextMultilingual Description="@($"MWR Credit Restoration")"
+        <ShareableVideoMultilingual Description="@($"MWR Credit Restoration")"
                               Duration="new(0, 6, 0)"
                               Url="https://www.ms1.megaschool.me/mwr-creditrestoration"
                               
@@ -157,7 +157,7 @@
                   TextToCopy="https://www.ms1.megaschool.me/mwr-healthshare"
                   ImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
         <br />
-        <CopyTextMultilingual Description=@($"Keys to Home Ownership")
+        <ShareableVideoMultilingual Description=@($"Keys to Home Ownership")
                               Duration="new(0, 3, 0)"
                               Url="https://www.ms1.megaschool.me/keys-to-homeownership"
                               
@@ -169,7 +169,7 @@
                               SpanishTooltip="Español shareable copied!"
                               SpanishImageUrl="@GetImageUrl(Image.MoneyChallengeLogo)" />
         <br />
-        <CopyTextMultilingual Description=@($"Precious Metals")
+        <ShareableVideoMultilingual Description=@($"Precious Metals")
                               Duration="new(0, 5, 0)"
                               Url="https://www.ms1.megaschool.me/mwr-precious-metals"
                              
@@ -181,7 +181,7 @@
                               SpanishTooltip="Español shareable copied!"
                               SpanishImageUrl="@GetImageUrl(Image.PreciousMetals)" />
         <br />
-        <CopyTextMultilingual Description=@($"Trust My Assets")
+        <ShareableVideoMultilingual Description=@($"Trust My Assets")
                               Duration="new(0, 4, 0)"
                               Url="https://www.ms1.megaschool.me/trust-my-assets"
                               
@@ -220,7 +220,7 @@
     <MudStack>
         @if (_pageLoaded)
         {
-            <CopyTextMultilingual Description="Join MWR"
+            <ShareableVideoMultilingual Description="Join MWR"
                                   Url="@Constants.JoinMakeWealthRealEnglish(AppState!.UserName)"
                                   
                                   EnglishTextToCopy="@Constants.JoinMakeWealthRealEnglish(AppState!.UserName)"
@@ -247,7 +247,7 @@
         }
         @if (_pageLoaded)
         {
-            <CopyTextMultilingual Description="My Website"
+            <ShareableVideoMultilingual Description="My Website"
                                   
                                   EnglishTextToCopy="@Constants.MarketingDirectorUrlEnglish(AppState!.UserName)"
                                   EnglishTooltip="English shareable copied!"
