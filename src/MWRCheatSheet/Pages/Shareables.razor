@@ -134,12 +134,12 @@
         {
             <ShareableVideoMultilingual Description="Instant Pay Raise"
                                         Url="@Constants.InstantPayRaiseUrlEnglish(AppState!.UserName)"
-
-                                        EnglishTextToCopy="@Constants.InstantPayRaiseUrlEnglish(AppState!.UserName)"
+                                        
+                                        EnglishTextToCopy="@($"MWR Instant Pay Raise{Environment.NewLine}{Constants.PointingDownEmoji}{Environment.NewLine}{Constants.InstantPayRaiseUrlEnglish(AppState!.UserName)}")"
                                         EnglishTooltip="English shareable copied!"
                                         EnglishImageUrl="@Constants.GetImageUrl(Image.MoneyChallengeLogo)"
-
-                                        SpanishTextToCopy="@Constants.InstantPayRaiseUrlSpanish(AppState!.UserName)"
+                                        
+                                        SpanishTextToCopy="@($"MWR Instant Pay Raise{Environment.NewLine}{Constants.PointingDownEmoji}{Environment.NewLine}{Constants.InstantPayRaiseUrlSpanish(AppState!.UserName)}")"
                                         SpanishTooltip="Español shareable copied!"
                                         SpanishImageUrl="@Constants.GetImageUrl(Image.MoneyChallengeLogo)" />
             <br />

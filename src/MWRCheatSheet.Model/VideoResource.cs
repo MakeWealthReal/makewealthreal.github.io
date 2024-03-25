@@ -14,4 +14,7 @@ public class VideoResource
     [JsonPropertyName("platform")]
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public VideoPlatform Platform { get; set; }
+
+    [JsonPropertyName("videoHash")]
+    public string? Hash { get; set; }
 }
