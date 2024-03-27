@@ -47,10 +47,10 @@
     <br/>
     <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center">Wednesdays</MudText>
     <RecurringEvent Header="Lunch & Learn"
-                    Url="http://zoom.thecreditteam.com"
-                    ImageUri="images/events/wednesdays-creditteam-noon_overview.jpeg"
+                    Url="http://theultimatecashflowsystem.com"
+                    ImageUri=@Util.MakeUrlBypassBrowserCache("images/events/wednesdays-creditteam-noon_overview.jpeg")
                     Recurrence="@((DayOfWeek.Wednesday, new TimeOnly(12, 0), NewYorkTimeZone))"
-                    Text="@($"72-Hour Money Challenge!{Environment.NewLine}{Environment.NewLine}Join Benjamin McCray as he shares life-changing strategies on how to make money on your lunch break!!!{Environment.NewLine}{Environment.NewLine}{GetNextEvent(DayOfWeek.Wednesday, new(12, 0), NewYorkTimeZone):dddd, MMMM d, yyyy}{Environment.NewLine}{Environment.NewLine}{GetRegionalTimes(GetNextEvent(DayOfWeek.Tuesday, new(12, 0), NewYorkTimeZone))}{Environment.NewLine}{Environment.NewLine}Go to:{Environment.NewLine}http://zoom.thecreditteam.com{Environment.NewLine}{Environment.NewLine}**No Password Required**{Environment.NewLine}{Environment.NewLine}#MWR #72HrMoneyChallenge")" />
+                    Text="@($"72-Hour Money Challenge!{Environment.NewLine}{Environment.NewLine}Join Benjamin McCray as he shares life-changing strategies on how to make money on your lunch break!!!{Environment.NewLine}{Environment.NewLine}{GetNextEvent(DayOfWeek.Wednesday, new(12, 0), NewYorkTimeZone):dddd, MMMM d, yyyy}{Environment.NewLine}{Environment.NewLine}{GetRegionalTimes(GetNextEvent(DayOfWeek.Tuesday, new(12, 0), NewYorkTimeZone))}{Environment.NewLine}{Environment.NewLine}Go to:{Environment.NewLine}http://theultimatecashflowsystem.com{Environment.NewLine}{Environment.NewLine}#MWR #72HrMoneyChallenge")" />
     <RecurringEvent Header=@($"Wendell Philp & Eric Willner{Environment.NewLine}Business Overview")
                     Url="http://zoom.thecreditteam.com"
                     ImageUri="images/events/wednesdays-creditteam-overview.jpeg"
