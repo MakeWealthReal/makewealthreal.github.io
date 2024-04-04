@@ -97,7 +97,7 @@
             <MudTh Style="text-align:center; vertical-align:text-top; border-color:rgb(27,53,115);">Monthly Residuals</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd Style="text-align:center;">Month @(_productionDuplicationLevels.ToList().IndexOf(context) + 1)</MudTd>
+            <MudTd Style="text-align:center;">@(_productionDuplicationLevels.ToList().IndexOf(context) + 1)</MudTd>
             <MudTd Style="text-align:center;">@context.TeamMembershipEnrollments.ToString("N0")</MudTd>
             <MudTd Style="text-align:center;">$@(Util.GetMonthlyIncome(context.TeamMembershipEnrollments).ToString("N0"))</MudTd>
         </RowTemplate>
