@@ -6,105 +6,54 @@
 <MudTimeline>
     <MudTimelineItem Color="Color.Info" Size="Size.Small">
         <ItemOpposite>
-            <MudText Color="Color.Info" Typo="Typo.h5">1970</MudText>
+            <MudText Color="Color.Info" Typo="Typo.h5">Freshman</MudText>
+            <MudText Color="Color.Info" Typo="Typo.h6" Align="Align.Right">(72 Hours)</MudText>
         </ItemOpposite>
         <ItemContent>
-            <MudText Color="Color.Info" Typo="Typo.h6" GutterBottom="true">Atom Towns</MudText>
-            <MudText>Construction of the town of Pripyat, one of 9 “atom towns” begins, to be inhabited by future employees of the nuclear power plants.</MudText>
+            <MudText Color="Color.Info" Typo="Typo.h6" GutterBottom="true">72-Hour Money Challenge</MudText>
+            <MudText>Create Cash Flow<br /><br />&#x2022; Eliminate My Debt<br />&#x2022; Debt to Wealth<br />&#x2022; Lower My Taxes<br />&#x2022; Lower My Bills<br />&#x2022; Restore My Credit</MudText>
+            <br/>
+            <MudText Align="Align.Center"><MudLink Href="/freshman">Enroll Now!</MudLink></MudText>
         </ItemContent>
     </MudTimelineItem>
     <MudTimelineItem Color="Color.Success" Size="Size.Small">
         <ItemOpposite>
-            <MudText Color="Color.Success" Typo="Typo.h5">1977</MudText>
+            <MudText Color="Color.Success" Typo="Typo.h5">Sophomore</MudText>
+            <MudText Color="Color.Success" Typo="Typo.h6" Align="Align.Left">(72 Days)</MudText>
         </ItemOpposite>
         <ItemContent>
-            <MudText Color="Color.Success" Typo="Typo.h6" GutterBottom="true">Operational</MudText>
-            <MudText>The first of the Chernobyl Nuclear Power Plants four reactors is ready to operate followed by number 2 in 1978.</MudText>
+            <MudText Color="Color.Success" Typo="Typo.h6" GutterBottom="true">Next Level Strategies</MudText>
+            <MudText>Increase Cash Flow<br /><br />&#x2022; PRA<br />&#x2022; Land Banking<br />&#x2022; Precious Metals<br />&#x2022; Trust My Assets</MudText>
+            <br/>
+            <MudText Align="Align.Center"><MudLink Disabled="true">Enroll Now!</MudLink></MudText>
         </ItemContent>
     </MudTimelineItem>
     <MudTimelineItem Color="Color.Error" Size="Size.Small">
         <ItemOpposite>
-            <MudText Color="Color.Error" Typo="Typo.h5">1979</MudText>
+            <MudText Color="Color.Error" Typo="Typo.h5">Junior</MudText>
+            <MudText Color="Color.Error" Typo="Typo.h6" Align="Align.Right">(72 Weeks)</MudText>
         </ItemOpposite>
         <ItemContent>
-            <MudText Color="Color.Error" Typo="Typo.h6" GutterBottom="true">Pripyat</MudText>
-            <MudText>Pripyat officially proclaimed as a city.<br />The Chernobyl Atomic Power Station reaches its first 10 billion kilowatt-hours of electical output.</MudText>
+            <MudText Color="Color.Error" Typo="Typo.h6" GutterBottom="true">Duplication</MudText>
+            <MudText>Multiply Cash Flow<br /><br />&#x2022; Personal Home Parties<br />&#x2022; Downline Home Parties</MudText>
+            <br/>
+            <MudText Align="Align.Center"><MudLink Disabled="true">Enroll Now!</MudLink></MudText>
+        </ItemContent>
+    </MudTimelineItem>
+    <MudTimelineItem Color="Color.Primary" Size="Size.Small">
+        <ItemOpposite>
+            <MudText Color="Color.Primary" Typo="Typo.h5">Senior</MudText>
+            <MudText Color="Color.Primary" Typo="Typo.h6" Align="Align.Left">(72 years)</MudText>
+        </ItemOpposite>
+        <ItemContent>
+            <MudText Color="Color.Primary" Typo="Typo.h6" GutterBottom="true">Legacy</MudText>
+            <MudText>Protect Cash Flow<br /><br />&#x2022; Personal Home Parties<br />&#x2022; Downline Home Parties</MudText>
+            <br/>
+            <MudText Align="Align.Center"><MudLink Disabled="true">Enroll Now!</MudLink></MudText>
         </ItemContent>
     </MudTimelineItem>
 </MudTimeline>
 
-<MudChipSet @bind-SelectedChips="_selected" MultiSelection="true" Filter="true">
-    @foreach(var filterableValueable in Highlights)
-    {
-        <MudChip Text="@(filterableValueable.Description)" Color="Color.Primary" SelectedColor="Color.Secondary" />
-    }
-</MudChipSet>
-<br/>
-<MudStack>
-    @foreach(var testimonial in UI.EnglishLocale.Testimonials)
-    {
-        switch(testimonial.Video.Platform)
-        {
-            case VideoPlatform.TikTok:
-                <Testimonial Description="@testimonial.Description"
-                             TikTok="@((testimonial.Video.UserHandle, testimonial.Video.Id))"
-                             Highlights="@(testimonial.Highlights)"
-                             Filter="@(GetHighlights(_selected))" />
-                break;
-
-            case VideoPlatform.YouTube:
-                <Testimonial Description="@testimonial.Description"
-                             YouTube="@testimonial.Video.Id"
-                             Highlights="@(testimonial.Highlights)"
-                             Filter="@(GetHighlights(_selected))" />
-                break;
-
-            case VideoPlatform.Vimeo:
-                <Testimonial Description="@testimonial.Description"
-                             Vimeo="@((testimonial.Video.Id, testimonial.Video.Hash))"
-                             Highlights="@(testimonial.Highlights)"
-                             Filter="@(GetHighlights(_selected))" />
-                break;
-        }
-    }
-
-    <!--
-        The hidden component below is a UI hack.  I don't know why, but if you make the component below visible,
-        and you click play on the video, the video DIRECTLY ABOVE IT will start playing.  This seems to always
-        apply to the last video on the page.  Thus, the hack is to make the last video hidden.
-        - Jerome Bell
-    -->
-    <div style="visibility:hidden;">
-        <Testimonial Description="This testimonial is a UI hack, see comment above."
-                     YouTube="Xlg3rp0D4aI"
-                     Highlights="@([Highlight.MoneyChallenge])"
-                     Filter="@([Highlight.MoneyChallenge])" />
-    </div>
-</MudStack>
 
 @code {
-    private static readonly (Highlight Highlight, string Description)[] Highlights =
-    [
-        (Highlight.MoneyChallenge, "72Hr Money Challenge"),
-        (Highlight.ReduceMyTaxes, "Reduce My Taxes"),
-        (Highlight.EliminateMyDebt, "Eliminate My Debt"),
-        (Highlight.LowerMyBills, "Lower My Bills"),
-        (Highlight.RestoreMyCredit, "Restore My Credit"),
-        (Highlight.DCA, "DCA"),
-        (Highlight.PRA, "PRA"),
-        (Highlight.LandBanking, "Land Banking"),
-        (Highlight.PreciousMetals, "Precious Metals"),
-        (Highlight.TrustMyAssets, "Trust My Assets"),
-        (Highlight.KeysToHomeOwnership, "Keys to Home Ownership"),
-        (Highlight.Bonuses, "Bonuses"),
-        (Highlight.Residuals, "Residuals"),
-        (Highlight.Couple, "Couple"),
-        (Highlight.Military, "Military"),
-        (Highlight.GenYGenZ, "Millenial/GenZ"),
-    ];
-
-    private MudChip[] _selected = [];
-
-    private static Highlight[] GetHighlights(MudChip[] chips)
-        => !chips.Any() ? [] : chips.Select(chip => Highlights.First(v => v.Description == chip.Text).Highlight).ToArray();
-}
+ }

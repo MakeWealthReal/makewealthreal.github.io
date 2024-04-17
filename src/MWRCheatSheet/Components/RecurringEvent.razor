@@ -42,9 +42,9 @@
                 <MudStack Row="true">
                     <MudSpacer/>
                     <MudChipSet SelectedValues="@([LivestreamPlatform?.Platform])" SelectedChipChanged="OnSelectedLivestreamPlatformChanged" Filter="true" Mandatory="true">
-                        <MudChip @ref="@_facebook" Size="Size.Small" Value="Model.LivestreamPlatform.Facebook" Text="@nameof(Model.LivestreamPlatform.Facebook)" Color="Color.Primary" Variant="Variant.Outlined" Default="@(LivestreamPlatform?.Platform == Model.LivestreamPlatform.Facebook)" OnClose="() => { }" CloseIcon="@Icons.Material.Filled.ClosedCaption">Facebook</MudChip>
-                        <MudChip @ref="@_youTube" Size="Size.Small" Value="Model.LivestreamPlatform.YouTube" Text="@nameof(Model.LivestreamPlatform.YouTube)" Color="Color.Primary" Variant="Variant.Outlined" Default="@(LivestreamPlatform?.Platform == Model.LivestreamPlatform.YouTube)">YouTube</MudChip>
-                        <MudChip @ref="@_linkedIn" Size="Size.Small" Value="Model.LivestreamPlatform.LinkedIn" Text="@nameof(Model.LivestreamPlatform.LinkedIn)" Color="Color.Primary" Variant="Variant.Outlined" Default="@(LivestreamPlatform?.Platform == Model.LivestreamPlatform.LinkedIn)" OnClose="() => { }" CloseIcon="@Icons.Material.Filled.ClosedCaption">LinkedIn</MudChip>
+                        <MudChip Size="Size.Small" Value="Model.LivestreamPlatform.Facebook" Text="@nameof(Model.LivestreamPlatform.Facebook)" Color="Color.Primary" Variant="Variant.Outlined" Default="@(LivestreamPlatform?.Platform == Model.LivestreamPlatform.Facebook)" OnClose="() => { }" CloseIcon="@Icons.Material.Filled.ClosedCaption">Facebook</MudChip>
+                        <MudChip Size="Size.Small" Value="Model.LivestreamPlatform.YouTube" Text="@nameof(Model.LivestreamPlatform.YouTube)" Color="Color.Primary" Variant="Variant.Outlined" Default="@(LivestreamPlatform?.Platform == Model.LivestreamPlatform.YouTube)">YouTube</MudChip>
+                        <MudChip Size="Size.Small" Value="Model.LivestreamPlatform.LinkedIn" Text="@nameof(Model.LivestreamPlatform.LinkedIn)" Color="Color.Primary" Variant="Variant.Outlined" Default="@(LivestreamPlatform?.Platform == Model.LivestreamPlatform.LinkedIn)" OnClose="() => { }" CloseIcon="@Icons.Material.Filled.ClosedCaption">LinkedIn</MudChip>
                     </MudChipSet>
                     <MudSpacer/>
                 </MudStack>
@@ -77,12 +77,7 @@
 </MudDialog>
 
 @code {
-    private bool _filterClosedCaptioning;
     private (bool ShowImageDialog, string ImageUri) _showImageDialog;
-    private MudChip? _selectedLivestreamPlatform;
-    private MudChip? _youTube;
-    private MudChip? _facebook;
-    private MudChip? _linkedIn;
 
     [Parameter]
     public string Header { get; set; } = "72-Hour Money Challenge!";
@@ -105,20 +100,8 @@
     [Parameter]
     public string? Archive { get; set; }
 
-    private (string EventId, LivestreamPlatform Platform)? _livestreamPlatform;
-
     [Parameter]
-    public (string EventId, LivestreamPlatform Platform)? LivestreamPlatform
-    {
-        get => _livestreamPlatform;
-        set
-        {
-            if (value != _livestreamPlatform)
-            {
-                _livestreamPlatform = value;
-            }
-        }
-    }
+    public (string EventId, LivestreamPlatform Platform)? LivestreamPlatform { get; set; }
 
     [Parameter]
     public EventCallback<(string EventId, LivestreamPlatform Platform)?> LivestreamPlatformSelectionChanged { get; set; }
