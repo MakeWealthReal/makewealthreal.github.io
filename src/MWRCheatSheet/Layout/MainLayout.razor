@@ -17,57 +17,10 @@
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
-<div class="page mud-layout">
-
-    <div class="sidebar mud-elevation-1">
-        <div class="top-row mud-drawer-head" style="background-color:rgb(27,53,115);">
-            <div>
-                <a class="ml-2 navbar-brand">MWR Cheat Sheet</a>
-            </div>
-        </div>
-
-        <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-        <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-            <CascadingValue Value="_appState">
-                <NavMenu/>
-            </CascadingValue>
-        </div>
-
-    </div>
-
+<div class="page mud-layout" style="background-color:rgb(22,19,44);">
     <main>
-        <div class="top-row px-4" style="background-color:rgb(27,53,115);">
-            <MudStack Row="true" Style="width:100%;">
-                @if (_componentInitialized && _appState.AppIsInstallable)
-                {
-                    <MudButton OnClick="OnInstallClick" EndIcon="@Icons.Material.Filled.InstallMobile" Variant="Variant.Filled" Color="Color.Primary">Install</MudButton>
-                }
-                else
-                {
-                    <MudStack Row="true">
-                        <MudText Style="color:white;">Hello @_appState.UserName! <MudIconButton OnClick="OnShowMembershipEnrollmentDialog" Icon="@Icons.Material.Filled.Edit" /></MudText>
-                    </MudStack>
-                }
-                <MudSpacer />
-                <MudText Style="color:white;">@GetTitle()</MudText>
-            </MudStack>
-        </div>
-
-        <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="my-2 pt-2">
-            <CascadingValue Value="_appState">
-                @Body
-                @if (_showAppUpdatePrompt)
-                {
-                    <MudFab Style="position:fixed; bottom:0; right:0; padding-right:5;" 
-                            Color="Color.Primary"
-                            EndIcon="@Icons.Material.Filled.Refresh"
-                            OnClick="@(e => NavigationManager.NavigateTo(NavigationManager.BaseUri, true))"
-                            Label="Load Update" />
-                }
-                <MudScrollToTop>
-                    <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
-                </MudScrollToTop>
-            </CascadingValue>
+        <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="my-2 pt-2" Style="height:100%;">
+            @Body
         </MudContainer>
     </main>
 </div>
